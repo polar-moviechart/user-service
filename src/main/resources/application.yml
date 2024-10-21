@@ -17,4 +17,10 @@ springdoc:
     operations-sorter: alpha
 
 server:
-  port: 8081
+  port: 8082
+
+kakao:
+  client:
+    id: 3c46ac9fcd53813acad0147afe8d5a31
+  redirect:
+    uri: http://localhost:3000/kakaoAuth
