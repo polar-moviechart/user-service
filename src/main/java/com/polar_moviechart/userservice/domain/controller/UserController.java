@@ -17,5 +17,7 @@ public class UserController {
     @PostMapping("/login/kakao/callback")
     public void kakaoLogin(@RequestBody KakaoCodeDto req) {
         KaKaoTokenResponse kaKaoTokenResponse = kakaoTokenService.getToken(req.getCode());
+        kakaoTokenService.getUserId(kaKaoTokenResponse.getAccess_token());
+
     }
 }
