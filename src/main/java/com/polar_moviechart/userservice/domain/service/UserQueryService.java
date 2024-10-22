@@ -14,6 +14,6 @@ public class UserQueryService {
     private final UserRepository userRepository;
 
     public Optional<User> getUser(AuthType authType, Long userId) {
-        return userRepository.findByAuthTypeAndUserId(authType, userId);
+        return userRepository.findByAuthTypeAndId(authType, userId);
     }
 }
