@@ -6,9 +6,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+@Service
 public class JwtProvider {
 
     private final String secretKey;
@@ -16,7 +18,7 @@ public class JwtProvider {
     private final long refreshTokenValidityInMilliseconds;
 
     public JwtProvider(
-            @Value("${jwt.secret}") String secretKey,
+            @Value("${jwt.secetKey}") String secretKey,
             @Value("${jwt.accessTokenValidityInMilliseconds}") long accessTokenValidityInMilliseconds,
             @Value("${jwt.refreshTokenValidityInMilliseconds}") long refreshTokenValidityInMilliseconds) {
         this.secretKey = secretKey;
