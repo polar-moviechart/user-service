@@ -3,11 +3,9 @@ package com.polar_moviechart.userservice.utils;
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Optional;
 
-@Configuration
 @Getter
 @Setter
 public class CustomResponse<T> {
@@ -17,7 +15,7 @@ public class CustomResponse<T> {
     private Optional<T> data;
 
     public CustomResponse(T data) {
-        this.data = Optional.of(data);
+        this.data = Optional.ofNullable(data);
     }
 
     public void setCode(ErrorCode errorCode) {
