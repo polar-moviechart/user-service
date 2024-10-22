@@ -24,3 +24,8 @@ kakao:
     id: 3c46ac9fcd53813acad0147afe8d5a31
   redirect:
     uri: http://localhost:3000/kakaoAuth
+
+jwt:
+  secetKey: polarMoviechartJwtSecretPolarMoviechartJwtSecret
+  accessTokenValidityMilliseconds: 3600 * 1000L # 1시간
+  refreshTokenValidityMilliseconds: 7 * 24 * 3600 * 1000L # 7일
