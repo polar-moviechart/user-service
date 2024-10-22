@@ -27,5 +27,5 @@ kakao:
 
 jwt:
   secetKey: polarMoviechartJwtSecretPolarMoviechartJwtSecret
-  accessTokenValidityMilliseconds: 3600 * 1000L # 1시간
-  refreshTokenValidityMilliseconds: 7 * 24 * 3600 * 1000L # 7일
+  accessTokenValidityInMilliseconds: 3600000 # 1시간
+  refreshTokenValidityInMilliseconds: 604800000 # 7일
