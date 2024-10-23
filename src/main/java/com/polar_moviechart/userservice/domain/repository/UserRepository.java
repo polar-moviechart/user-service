@@ -9,7 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    boolean existsByAuthTypeAndExternalId(AuthType authType, Long kakaoId);
-
-    Optional<User> findByAuthTypeAndId(AuthType authType, Long userId);
+    Optional<User> findByAuthTypeAndExternalId(AuthType authType, Long kakaoUserId);
 }

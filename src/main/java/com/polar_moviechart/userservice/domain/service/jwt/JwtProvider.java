@@ -1,7 +1,7 @@
 package com.polar_moviechart.userservice.domain.service.jwt;
 
-import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.Role;
+import com.polar_moviechart.userservice.exception.TokenCreationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class JwtProvider {
@@ -53,9 +54,11 @@ public class JwtProvider {
     }
 
     private String createToken(Long userId, Role role, long validityInMilliseconds) {
-        Claims claims = Jwts.claims().setSubject(userId.toString());
-        claims.put("role", role);
+        Claims claims = Optional.ofNullable(
+                Jwts.claims().setSubject(userId.toString())
+        ).orElseThrow(() -> new TokenCreationException("jwt Claim은 null일 수 없습니다."));
 
+        claims.put("role", role);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
