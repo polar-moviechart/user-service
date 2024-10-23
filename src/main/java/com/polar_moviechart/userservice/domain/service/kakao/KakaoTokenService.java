@@ -14,12 +14,11 @@ public class KakaoTokenService {
     @Value("${kakao.client.id}")
     private String clientId;
 
-    @Value("${kakao.redirect.uri}")
-    private String redirectUri;
+    private final String redirectUri = "http://localhost:8082/api/v1/users/kakao/login/callback";
     private final String tokenUrl = "https://kauth.kakao.com/oauth/token";
     private final String userInfoUrl = "https://kapi.kakao.com/v2/user/me";
 
-    public KaKaoTokenResponse getToken(String code) {
+    public KaKaoTokenResponse getTokenAndRedirectUser(String code) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         String body = String.format("grant_type=authorization_code" +
@@ -35,13 +34,13 @@ public class KakaoTokenService {
         return response.getBody();
     }
 
-    public KakaoUserInfoResponse getUserId(String kakaoAccessToken) {
+    public KakaoUserInfoDto getUserId(String kakaoAccessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setBearerAuth(kakaoAccessToken);
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
-        ResponseEntity<KakaoUserInfoResponse> response = restTemplate.exchange(userInfoUrl, HttpMethod.GET, httpEntity, KakaoUserInfoResponse.class);
+        ResponseEntity<KakaoUserInfoDto> response = restTemplate.exchange(userInfoUrl, HttpMethod.POST, httpEntity, KakaoUserInfoDto.class);
         return response.getBody();
     }
 }
