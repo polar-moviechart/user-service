@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UserQueryService {
     private final UserRepository userRepository;
 
-    public Optional<User> getUser(AuthType authType, Long userId) {
-        return userRepository.findByAuthTypeAndId(authType, userId);
+    public Optional<User> getUser(AuthType authType, Long kakaoUserId) {
+        return userRepository.findByAuthTypeAndExternalId(authType, kakaoUserId);
     }
 }
