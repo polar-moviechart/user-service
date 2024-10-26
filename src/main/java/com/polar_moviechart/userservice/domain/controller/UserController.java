@@ -29,4 +29,11 @@ public class UserController {
 
         return ResponseEntity.ok(customResponse);
     }
+
+    @PostMapping("/generateToken")
+    public ResponseEntity<CustomResponse<AccessTokenDto>> generateToken(@RequestBody RefreshTokenDto req) {
+        String accessToken = jwtProvider.createAccessToken(req.getRefreshToken());
+        CustomResponse<AccessTokenDto> customResponse = new CustomResponse<>(new AccessTokenDto(accessToken));
+        return ResponseEntity.ok(customResponse);
+    }
 }
