@@ -14,6 +14,9 @@ import java.util.Optional;
 @Service
 public class JwtProvider {
 
+    public static final String TOKEN_EXPIRED_MESSAGE = "토큰이 만료되었습니다.";
+    public static final String TOKEN_INVALID_MESSAGE = "토큰이 유효하지 않습니다.";
+    public static final String TOKEN_CANNOT_BE_NULL_MESSAGE = "jwt Claim은 null일 수 없습니다.";
     private final String secretKey;
     private final long accessTokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
@@ -35,16 +38,41 @@ public class JwtProvider {
     }
 
     public String createAccessToken(String refreshToken) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(refreshToken)
-                .getBody();
-
-        Long userId = Long.parseLong(claims.getSubject());
-        Role role = Role.valueOf(claims.get("role").toString());
-
-        return createToken(userId, role, accessTokenValidityInMilliseconds);
+        return parseToken(refreshToken)
+                .map(claims -> {
+                    validateClaims(claims);
+                    return createToken(
+                            Long.parseLong(claims.getSubject()),
+                            Role.valueOf(claims.get("role").toString()),
+                            accessTokenValidityInMilliseconds);
+                })
+                .get();
     }
+
+    public Optional<Claims> validateClaims(Claims claims) {
+        boolean isExpired = isExpired(claims);
+        if (isExpired) {
+            throw new TokenCreationException(TOKEN_EXPIRED_MESSAGE);
+        }
+        return Optional.of(claims);
+    }
+
+    private boolean isExpired(Claims claims) {
+        Date expiration = claims.getExpiration();
+        return expiration != null && expiration.before(new Date());
+    }
+
+    public Optional<Claims> parseToken(String token) {
+        try {
+            return Optional.of(Jwts.parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(token)
+                    .getBody());
+        } catch (Exception e) {
+            throw new TokenCreationException(TOKEN_INVALID_MESSAGE, e);
+        }
+    }
+
     public String createAccessToken(Long userId, Role role) {
         return createToken(userId, role, accessTokenValidityInMilliseconds);
     }
@@ -56,7 +84,7 @@ public class JwtProvider {
     private String createToken(Long userId, Role role, long validityInMilliseconds) {
         Claims claims = Optional.ofNullable(
                 Jwts.claims().setSubject(userId.toString())
-        ).orElseThrow(() -> new TokenCreationException("jwt Claim은 null일 수 없습니다."));
+        ).orElseThrow(() -> new TokenCreationException(TOKEN_CANNOT_BE_NULL_MESSAGE));
 
         claims.put("role", role);
         Date now = new Date();
