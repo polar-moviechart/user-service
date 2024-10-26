@@ -1,24 +1,24 @@
 package com.polar_moviechart.userservice.domain.service.jwt;
 
 import com.polar_moviechart.userservice.domain.entity.Role;
+import com.polar_moviechart.userservice.domain.utils.TestUtils;
+import com.polar_moviechart.userservice.exception.TokenCreationException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Optional;
 
 class JwtProviderTest {
     private JwtProvider jwtProvider;
-    private final String secretKey = "polarMoviechartJwtSecretPolarMoviechartJwtSecret";
+    private final String secretKey = "polarMoviechartJwtSecretPolarMoviechartJwtSecretTest";
 
     @BeforeEach
     void setUp() {
-        long accessTokenValidityInMilliseconds = 2 * 1000L; // 1초
-        long refreshTokenValidityInMilliseconds = 86400 * 1000L; // 24시간
+        long accessTokenValidityInMilliseconds = 1 * 1000L; // 1초
+        long refreshTokenValidityInMilliseconds = 2 * 1000L; // 2초
         jwtProvider = new JwtProvider(secretKey, accessTokenValidityInMilliseconds, refreshTokenValidityInMilliseconds);
     }
 
@@ -33,10 +33,9 @@ class JwtProviderTest {
         String accessToken = jwtProvider.createAccessToken(userId, role);
 
         // then
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(accessToken)
-                .getBody();
+        Optional<Claims> claimsOptional = jwtProvider.parseToken(accessToken);
+        Claims claims = claimsOptional.get();
+
         long extractedUserId = Long.parseLong(claims.getSubject());
         String extractedRoleString = (String) claims.get("role");
         Role extractedRole = Role.valueOf(extractedRoleString);
@@ -44,16 +43,37 @@ class JwtProviderTest {
         Assertions.assertThat(extractedUserId).isEqualTo(userId);
         Assertions.assertThat(extractedRole).isEqualTo(role);
 
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        TestUtils.sleep(2000L);
 
         Assertions.assertThatThrownBy(() -> {
-                    Jwts.parser().setSigningKey(secretKey).parseClaimsJws(accessToken);
+                    jwtProvider.validateClaims(claims);
                 })
-                .isInstanceOf(ExpiredJwtException.class)
-                .hasMessageContaining("JWT expired");
+                .isInstanceOf(TokenCreationException.class)
+                .hasMessageContaining(jwtProvider.TOKEN_EXPIRED_MESSAGE);
+    }
+
+    @DisplayName("엑세스 토큰이 만료된 경우 리프레쉬 토큰을 통해 재발급할 수 있다.")
+    @Test
+    void test() {
+        // given
+        TokenResponse tokenResponse = jwtProvider.generateTokens(1L, Role.USER);
+
+        // when
+        String accessToken = tokenResponse.getAccessToken();
+        Claims claims = jwtProvider.parseToken(accessToken).get();
+
+        TestUtils.sleep(1000L);
+
+        Assertions.assertThatThrownBy(() -> {
+            jwtProvider.validateClaims(claims);
+        })
+        .isInstanceOf(TokenCreationException.class)
+        .hasMessageContaining(jwtProvider.TOKEN_EXPIRED_MESSAGE);
+
+        String newAccessToken = jwtProvider.createAccessToken(tokenResponse.getRefreshToken());
+        Claims newClaims = jwtProvider.parseToken(newAccessToken).get();
+        // then
+        Assertions.assertThat(jwtProvider.validateClaims(newClaims))
+                .isPresent();
     }
 }
