@@ -16,7 +16,7 @@ public class KakaoUserProcessor {
 
 
     @Transactional
-    public Long processKakaoLogin(AuthType authType, Long kakaoUserId) {
+    public Long processKakaoLogin(Long kakaoUserId) {
         return userQueryService.getUser(AuthType.KAKAO, kakaoUserId)
                 .map(User::getId)
                 .orElseGet(() -> {
