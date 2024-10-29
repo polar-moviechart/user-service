@@ -1,6 +1,5 @@
 package com.polar_moviechart.userservice.domain.controller;
 
-import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.Role;
 import com.polar_moviechart.userservice.domain.service.jwt.JwtProvider;
 import com.polar_moviechart.userservice.domain.service.jwt.TokenResponse;
@@ -23,7 +22,7 @@ public class UserController {
 
     @PostMapping("/login/kakao")
     public ResponseEntity<CustomResponse<TokenResponse>> kakaoLogin(@RequestBody KakaoUserInfoDto req) {
-        Long userId = kakaoUserProcessor.processKakaoLogin(AuthType.KAKAO, req.getId());
+        Long userId = kakaoUserProcessor.processKakaoLogin(req.getId());
         TokenResponse tokenResponse = jwtProvider.generateTokens(userId, Role.USER);
         CustomResponse<TokenResponse> customResponse = new CustomResponse<>(tokenResponse);
 
