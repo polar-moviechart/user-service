@@ -16,4 +16,8 @@ public class UserQueryService {
     public Optional<User> getUser(AuthType authType, Long kakaoUserId) {
         return userRepository.findByAuthTypeAndExternalId(authType, kakaoUserId);
     }
+
+    public boolean isExists(Long userId) {
+        return userRepository.existsById(userId);
+    }
 }
