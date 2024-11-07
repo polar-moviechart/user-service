@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.controller;
+package com.polar_moviechart.userservice.domain.controller.internalapi;
 
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
 import com.polar_moviechart.userservice.utils.CustomResponse;
