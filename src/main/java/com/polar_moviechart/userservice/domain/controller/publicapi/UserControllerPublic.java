@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.controller;
+package com.polar_moviechart.userservice.domain.controller.publicapi;
 
 import com.polar_moviechart.userservice.domain.entity.Role;
 import com.polar_moviechart.userservice.domain.service.jwt.JwtProvider;
@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
-public class UserController {
+@RequestMapping("/public/api/v1/users")
+public class UserControllerPublic {
+
     private final KakaoUserProcessor kakaoUserProcessor;
     private final JwtProvider jwtProvider;
 
@@ -26,13 +27,6 @@ public class UserController {
         TokenResponse tokenResponse = jwtProvider.generateTokens(userId, Role.USER);
         CustomResponse<TokenResponse> customResponse = new CustomResponse<>(tokenResponse);
 
-        return ResponseEntity.ok(customResponse);
-    }
-
-    @PostMapping("/generateToken")
-    public ResponseEntity<CustomResponse<AccessTokenDto>> generateToken(@RequestBody RefreshTokenDto req) {
-        String accessToken = jwtProvider.createAccessToken(req.getRefreshToken());
-        CustomResponse<AccessTokenDto> customResponse = new CustomResponse<>(new AccessTokenDto(accessToken));
         return ResponseEntity.ok(customResponse);
     }
 }
