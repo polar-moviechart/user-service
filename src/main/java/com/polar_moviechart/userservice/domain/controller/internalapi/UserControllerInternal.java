@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api-internal/v1/users")
+@RequestMapping("/internal/api/v1/users")
 public class UserControllerInternal {
 
     private final UserQueryService userQueryService;
