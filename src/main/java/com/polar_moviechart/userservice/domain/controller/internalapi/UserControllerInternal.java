@@ -16,8 +16,8 @@ public class UserControllerInternal {
 
     private final UserQueryService userQueryService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse<Boolean>> userExists(@PathVariable("id") Long userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<CustomResponse<Boolean>> userExists(@PathVariable("userId") Long userId) {
         boolean isExists = userQueryService.isExists(userId);
         return ResponseEntity.ok(new CustomResponse(isExists));
     }
