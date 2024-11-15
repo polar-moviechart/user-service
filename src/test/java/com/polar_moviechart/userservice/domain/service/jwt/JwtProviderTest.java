@@ -14,12 +14,12 @@ import java.util.Optional;
 class JwtProviderTest {
     private JwtProvider jwtProvider;
     private final String secretKey = "polarMoviechartJwtSecretPolarMoviechartJwtSecretTest";
+    private final long atkExpiredTime = 1000L;
+    private final long rtkExpiredTime = 100 * 1000L;
 
     @BeforeEach
     void setUp() {
-        long accessTokenValidityInMilliseconds = 1 * 1000L; // 1초
-        long refreshTokenValidityInMilliseconds = 2 * 1000L; // 2초
-        jwtProvider = new JwtProvider(secretKey, accessTokenValidityInMilliseconds, refreshTokenValidityInMilliseconds);
+        jwtProvider = new JwtProvider(secretKey, atkExpiredTime, rtkExpiredTime);
     }
 
     @DisplayName("엑세스 토큰 발급 및 검증")
@@ -43,7 +43,7 @@ class JwtProviderTest {
         Assertions.assertThat(extractedUserId).isEqualTo(userId);
         Assertions.assertThat(extractedRole).isEqualTo(role);
 
-        TestUtils.sleep(2000L);
+        TestUtils.sleep(atkExpiredTime);
 
         Assertions.assertThatThrownBy(() -> {
                     jwtProvider.validateClaims(claims);
@@ -62,7 +62,7 @@ class JwtProviderTest {
         String accessToken = tokenResponse.getAccessToken();
         Claims claims = jwtProvider.parseToken(accessToken).get();
 
-        TestUtils.sleep(1000L);
+        TestUtils.sleep(atkExpiredTime);
 
         Assertions.assertThatThrownBy(() -> {
             jwtProvider.validateClaims(claims);
