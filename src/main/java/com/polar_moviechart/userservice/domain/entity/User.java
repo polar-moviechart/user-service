@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
@@ -38,4 +36,12 @@ public class User {
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    @Builder
+    public User(String nickname, Long externalId, AuthType authType) {
+        this.nickname = nickname;
+        this.externalId = externalId;
+        this.authType = authType;
+    }
+
 }

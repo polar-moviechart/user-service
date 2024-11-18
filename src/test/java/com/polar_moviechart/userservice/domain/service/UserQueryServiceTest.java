@@ -1,19 +1,16 @@
 package com.polar_moviechart.userservice.domain.service;
 
+import com.polar_moviechart.userservice.BaseTestConfig;
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class UserQueryServiceTest {
+class UserQueryServiceTest extends BaseTestConfig {
 
     @Autowired
     private UserQueryService userQueryService;
