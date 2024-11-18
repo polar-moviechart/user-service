@@ -63,3 +63,16 @@ bootBuildImage {
 		}
 	}
 }
+
+tasks.named('jar') {
+	archiveBaseName = 'user-service'
+	archiveVersion = '0.0.1-SNAPSHOT'
+}
+
+bootJar {
+	enabled = true
+}
+
+jar {
+	enabled = false
+}
