@@ -8,19 +8,23 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
 
+@TestPropertySource(properties = {
+        "jwt.secretKey=polarMoviechartJwtSecretPolarMoviechartJwtSecretTest",
+        "jwt.accessTokenValidityInMilliseconds=1000L",
+        "jwt.refreshTokenValidityInMilliseconds=100000L"
+})
 class JwtProviderTest {
+
+    @Autowired
     private JwtProvider jwtProvider;
     private final String secretKey = "polarMoviechartJwtSecretPolarMoviechartJwtSecretTest";
     private final long atkExpiredTime = 1000L;
     private final long rtkExpiredTime = 100 * 1000L;
-
-    @BeforeEach
-    void setUp() {
-        jwtProvider = new JwtProvider(secretKey, atkExpiredTime, rtkExpiredTime);
-    }
 
     @DisplayName("엑세스 토큰 발급 및 검증")
     @Test
