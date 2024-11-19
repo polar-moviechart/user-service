@@ -38,6 +38,8 @@ dependencies {
 	// 플라이웨이
 	implementation 'org.flywaydb:flyway-mysql'
 
+	// prometheus
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
