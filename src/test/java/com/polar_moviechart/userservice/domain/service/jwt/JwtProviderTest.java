@@ -14,7 +14,7 @@ import java.util.Optional;
 class JwtProviderTest {
     private JwtProvider jwtProvider;
     private final String secretKey = "polarMoviechartJwtSecretPolarMoviechartJwtSecretTest";
-    private final long atkExpiredTime = 1000L;
+    private final long atkExpiredTime = 2000L;
     private final long rtkExpiredTime = 100 * 1000L;
 
     @BeforeEach
