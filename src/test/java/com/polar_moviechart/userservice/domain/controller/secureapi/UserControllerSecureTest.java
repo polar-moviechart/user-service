@@ -2,6 +2,7 @@ package com.polar_moviechart.userservice.domain.controller.secureapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polar_moviechart.userservice.domain.service.MovieReviewQueryService;
+import com.polar_moviechart.userservice.domain.service.MovieValidationService;
 import com.polar_moviechart.userservice.domain.service.jwt.JwtProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ class UserControllerSecureTest {
 
     @MockBean
     private MovieReviewQueryService movieReviewQueryService;
+
+    @MockBean
+    private MovieValidationService movieValidationService;
 
     @MockBean
     private JwtProvider jwtProvider;
