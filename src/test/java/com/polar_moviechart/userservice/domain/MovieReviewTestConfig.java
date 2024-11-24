@@ -16,10 +16,10 @@ public abstract class MovieReviewTestConfig extends UserTestConfig {
     protected void initMovieReviews(Integer reviewCnt) {
         this.reviewCnt = reviewCnt;
         List<User> users = getUsers();
-        setUpMovieReviwes(users);
+        setUpMovieReviews(users);
     }
 
-    private void setUpMovieReviwes(List<User> users) {
+    private void setUpMovieReviews(List<User> users) {
         for (User user : users) {
             for (int i = 1; i <= reviewCnt; i++) {
                 MovieReview movieReview = MovieReview.builder()
