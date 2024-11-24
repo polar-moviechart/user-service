@@ -15,8 +15,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserControllerSecure.class)
-class UserControllerSecureTest {
+@WebMvcTest(MovieControllerSecure.class)
+class MovieControllerSecureTest {
 
     @Autowired
     ObjectMapper objectMapper;
@@ -29,9 +29,6 @@ class UserControllerSecureTest {
 
     @MockBean
     private MovieValidationService movieValidationService;
-
-    @MockBean
-    private JwtProvider jwtProvider;
 
     @Test
     void addReview_InvalidRequest_ReturnsBadRequest() throws Exception {
