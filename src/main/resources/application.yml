@@ -26,6 +26,9 @@ springdoc:
     display-request-duration: true
     operations-sorter: alpha
 
+movie-service:
+  url: http://localhost:8081/internal/api/v1/movies/
+
 server:
   port: 8082
 
