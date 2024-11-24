@@ -1,7 +1,7 @@
 package com.polar_moviechart.userservice.domain.service.jwt;
 
 import com.polar_moviechart.userservice.domain.entity.Role;
-import com.polar_moviechart.userservice.exception.ErrorInfo;
+import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.TokenCreationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -52,7 +52,7 @@ public class JwtProvider {
     public Optional<Claims> validateClaims(Claims claims) {
         boolean isExpired = isExpired(claims);
         if (isExpired) {
-            throw new TokenCreationException(ErrorInfo.TOKEN_EXPIRED);
+            throw new TokenCreationException(ErrorCode.TOKEN_EXPIRED);
         }
         return Optional.of(claims);
     }
@@ -69,9 +69,9 @@ public class JwtProvider {
                     .parseClaimsJws(token)
                     .getBody());
         } catch (ExpiredJwtException e) {
-            throw new TokenCreationException(ErrorInfo.TOKEN_EXPIRED);
+            throw new TokenCreationException(ErrorCode.TOKEN_EXPIRED);
         } catch (Exception e) {
-            throw new TokenCreationException(ErrorInfo.TOKEN_CREATION_ERROR, e);
+            throw new TokenCreationException(ErrorCode.TOKEN_CREATION_ERROR, e);
         }
     }
 
@@ -86,7 +86,7 @@ public class JwtProvider {
     private String createToken(Long userId, Role role, long validityInMilliseconds) {
         Claims claims = Optional.ofNullable(
                 Jwts.claims().setSubject(userId.toString())
-        ).orElseThrow(() -> new TokenCreationException(ErrorInfo.TOKEN_CANNOT_BE_NULL));
+        ).orElseThrow(() -> new TokenCreationException(ErrorCode.TOKEN_CANNOT_BE_NULL));
 
         claims.put("role", role);
         Date now = new Date();
