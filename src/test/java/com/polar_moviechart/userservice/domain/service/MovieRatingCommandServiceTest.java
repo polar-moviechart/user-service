@@ -3,7 +3,7 @@ package com.polar_moviechart.userservice.domain.service;
 import com.polar_moviechart.userservice.domain.MovieRatingTestConfig;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.MovieRating;
-import com.polar_moviechart.userservice.domain.repository.MovieRatingRepository;
+import com.polar_moviechart.userservice.domain.repository.movie.MovieRatingRepository;
 import com.polar_moviechart.userservice.domain.service.movie.MovieRatingCommandService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
