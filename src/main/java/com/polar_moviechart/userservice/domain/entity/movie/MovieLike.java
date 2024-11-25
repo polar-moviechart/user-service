@@ -47,12 +47,4 @@ public class MovieLike {
     public void setIsLike(Boolean isLike) {
         this.isLike = isLike;
     }
-
-    public MovieLikeRes toDto() {
-        return MovieLikeRes.builder()
-                .userId(userId)
-                .code(code)
-                .isLike(isLike)
-                .build();
-    }
 }
