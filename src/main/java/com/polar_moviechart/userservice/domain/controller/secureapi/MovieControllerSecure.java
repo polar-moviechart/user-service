@@ -17,12 +17,8 @@ import static org.springframework.http.ResponseEntity.*;
 @RequiredArgsConstructor
 @RequestMapping("/secure/api/v1/users/movies")
 public class MovieControllerSecure {
-    private final MovieReviewQueryService movieReviewQueryService;
-    private final MovieReviewCommandService movieReviewCommandService;
-    private final MovieValidationService movieValidationService;
-    private final MovieRatingCommandService movieRatingCommandService;
-    private final MovieRatingQueryService movieRatingQueryService;
 
+    private final MovieService movieService;
 
     @PostMapping("/{code}/rating")
     public ResponseEntity<CustomResponse<Double>> updateRating(HttpServletRequest request,
@@ -30,7 +26,8 @@ public class MovieControllerSecure {
                                                                @RequestBody UpdateRatingRequest updateRatingRequest) {
         String userIdString = request.getHeader("X-User-Id");
         Long userId = Long.valueOf(userIdString);
-        double ratingValue = movieRatingCommandService.updateRating(code, userId, updateRatingRequest);
+
+        double ratingValue = movieService.updateRating(code, userId, updateRatingRequest);
 
         return ok(new CustomResponse<>(ratingValue));
     }
@@ -39,7 +36,7 @@ public class MovieControllerSecure {
     public ResponseEntity<CustomResponse<Double>> getMovieRating(HttpServletRequest request,
                                                                  @PathVariable(name = "code") int code) {
         Long userId = (Long) request.getAttribute("userId");
-        Double movieRating = movieRatingQueryService.getUserMovieRating(code, userId);
+        Double movieRating = movieService.getUserMovieRating(code, userId);
 
         return ok(new CustomResponse<>(movieRating));
     }
@@ -49,8 +46,8 @@ public class MovieControllerSecure {
             HttpServletRequest servletRequest,
             @PathVariable("code") int code,
             @Valid @RequestBody AddReviewReq req) {
-        movieValidationService.validateMovieExists(code);
-        AddReviewRes addReviewRes = movieReviewCommandService.addReview(code, getUserId(servletRequest), req);
+        movieService.validateMovieExists(code);
+        AddReviewRes addReviewRes = movieService.addReview(code, getUserId(servletRequest), req);
 
         return ok(new CustomResponse<>(addReviewRes));
     }
@@ -59,7 +56,8 @@ public class MovieControllerSecure {
     public ResponseEntity<CustomResponse<MovieReviewRes>> getReview(
             HttpServletRequest servletRequest,
             @PathVariable("code") int code) {
-        MovieReviewRes res = movieReviewQueryService.getReview(getUserId(servletRequest), code);
+
+        MovieReviewRes res = movieService.getReview(getUserId(servletRequest), code);
 
         return ok(new CustomResponse<>(res));
     }
