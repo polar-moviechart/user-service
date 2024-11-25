@@ -15,8 +15,13 @@ import java.util.Optional;
 public class UserQueryService {
     private final UserRepository userRepository;
 
-    public Optional<User> getUser(AuthType authType, Long kakaoUserId) {
+    public Optional<User> getUserOptional(AuthType authType, Long kakaoUserId) {
         return userRepository.findByAuthTypeAndExternalId(authType, kakaoUserId);
+    }
+
+    public User getKakaoUser(AuthType authType, Long kakaoUserId) {
+        return userRepository.findByAuthTypeAndExternalId(authType, kakaoUserId)
+                .orElseThrow(() -> new UserBusinessException(ErrorCode.USER_NOT_EXISTS));
     }
 
     public boolean isExists(Long userId) {
