@@ -6,6 +6,7 @@ import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateR
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
+import com.polar_moviechart.userservice.domain.service.MovieValidationService;
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.AddReviewRes;
 import lombok.RequiredArgsConstructor;
@@ -19,25 +20,25 @@ public class MovieCommandService {
     private final MovieReviewCommandService movieReviewCommandService;
     private final MovieRatingCommandService movieRatingCommandService;
     private final MovieLikeCommandService movieLikeCommandService;
-    private final MovieQueryService movieQueryService;
+    private final MovieValidationService movieValidationService;
     private final UserQueryService userQueryService;
 
 
     @Transactional
     public double updateRating(int code, Long userId, UpdateRatingRequest updateRatingRequest) {
-        movieQueryService.validateMovieExists(code);
+        movieValidationService.validateMovieExists(code);
         return movieRatingCommandService.updateRating(code, getUser(userId), updateRatingRequest);
     }
 
     @Transactional
     public AddReviewRes addReview(int code, Long userId, AddReviewReq req) {
-        movieQueryService.validateMovieExists(code);
+        movieValidationService.validateMovieExists(code);
         return movieReviewCommandService.addReview(code, getUser(userId), req);
     }
 
     @Transactional
     public UpdateMovieLikeRes updateLike(Long userId, int code, UpdateMovieLikeReq req) {
-        movieQueryService.validateMovieExists(code);
+        movieValidationService.validateMovieExists(code);
         MovieLike movieLike = movieLikeCommandService.updateLike(code, getUser(userId), req);
         return movieLike.toDto();
     }
