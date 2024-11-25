@@ -1,6 +1,6 @@
 package com.polar_moviechart.userservice.domain.service;
 
-import com.polar_moviechart.userservice.domain.entity.MovieRating;
+import com.polar_moviechart.userservice.domain.entity.movie.MovieRating;
 import com.polar_moviechart.userservice.domain.repository.movie.MovieRatingRepository;
 import com.polar_moviechart.userservice.domain.service.movie.MovieRatingQueryService;
 import com.polar_moviechart.userservice.exception.ErrorCode;

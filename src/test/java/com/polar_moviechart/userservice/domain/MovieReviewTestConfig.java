@@ -1,6 +1,6 @@
 package com.polar_moviechart.userservice.domain;
 
-import com.polar_moviechart.userservice.domain.entity.MovieReview;
+import com.polar_moviechart.userservice.domain.entity.movie.MovieReview;
 import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.domain.repository.movie.MovieReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
