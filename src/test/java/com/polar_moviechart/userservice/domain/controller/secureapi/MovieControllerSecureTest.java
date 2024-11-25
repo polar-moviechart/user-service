@@ -1,9 +1,10 @@
 package com.polar_moviechart.userservice.domain.controller.secureapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.polar_moviechart.userservice.domain.service.MovieRatingCommandService;
+import com.polar_moviechart.userservice.domain.service.MovieRatingQueryService;
 import com.polar_moviechart.userservice.domain.service.MovieReviewQueryService;
 import com.polar_moviechart.userservice.domain.service.MovieValidationService;
-import com.polar_moviechart.userservice.domain.service.jwt.JwtProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,8 +16,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserControllerSecure.class)
-class UserControllerSecureTest {
+@WebMvcTest(MovieControllerSecure.class)
+class MovieControllerSecureTest {
 
     @Autowired
     ObjectMapper objectMapper;
@@ -24,14 +25,10 @@ class UserControllerSecureTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private MovieReviewQueryService movieReviewQueryService;
-
-    @MockBean
-    private MovieValidationService movieValidationService;
-
-    @MockBean
-    private JwtProvider jwtProvider;
+    @MockBean private MovieReviewQueryService movieReviewQueryService;
+    @MockBean private MovieValidationService movieValidationService;
+    @MockBean private MovieRatingCommandService movieRatingCommandService;
+    @MockBean private MovieRatingQueryService movieRatingQueryService;
 
     @Test
     void addReview_InvalidRequest_ReturnsBadRequest() throws Exception {

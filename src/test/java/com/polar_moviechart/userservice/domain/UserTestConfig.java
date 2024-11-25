@@ -42,6 +42,14 @@ public abstract class UserTestConfig {
     }
 
     public List<User> getUsers() {
-        return this.users;
+        return new ArrayList<>(this.users);
+    }
+
+    public User getUser(int idx) {
+        return this.users.get(idx);
+    }
+
+    public Long getUserId(int idx) {
+        return getUsers().get(idx).getId();
     }
 }

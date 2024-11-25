@@ -21,4 +21,8 @@ public class UserBusinessException extends RuntimeException {
     public UserBusinessException(Throwable cause) {
         super(msg, cause);
     }
+
+    public String getCode() {
+        return this.errorCode.getCode();
+    }
 }
