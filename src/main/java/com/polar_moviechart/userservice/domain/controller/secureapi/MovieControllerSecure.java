@@ -2,6 +2,7 @@ package com.polar_moviechart.userservice.domain.controller.secureapi;
 
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
 import com.polar_moviechart.userservice.domain.service.*;
 import com.polar_moviechart.userservice.utils.CustomResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +10,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +32,7 @@ public class MovieControllerSecure {
         Long userId = Long.valueOf(userIdString);
         double ratingValue = movieRatingCommandService.updateRating(code, userId, updateRatingRequest);
 
-        return ResponseEntity.ok(new CustomResponse<>(ratingValue));
+        return ok(new CustomResponse<>(ratingValue));
     }
 
     @GetMapping("/{code}/rating")
@@ -38,7 +41,7 @@ public class MovieControllerSecure {
         Long userId = (Long) request.getAttribute("userId");
         Double movieRating = movieRatingQueryService.getUserMovieRating(code, userId);
 
-        return ResponseEntity.ok(new CustomResponse<>(movieRating));
+        return ok(new CustomResponse<>(movieRating));
     }
 
     @PostMapping("/{code}/reviews")
@@ -49,7 +52,16 @@ public class MovieControllerSecure {
         movieValidationService.validateMovieExists(code);
         AddReviewRes addReviewRes = movieReviewCommandService.addReview(code, getUserId(servletRequest), req);
 
-        return ResponseEntity.ok(new CustomResponse<>(addReviewRes));
+        return ok(new CustomResponse<>(addReviewRes));
+    }
+
+    @GetMapping("/{code}/reviews")
+    public ResponseEntity<CustomResponse<MovieReviewRes>> getReview(
+            HttpServletRequest servletRequest,
+            @PathVariable("code") int code) {
+        MovieReviewRes res = movieReviewQueryService.getReview(getUserId(servletRequest), code);
+
+        return ok(new CustomResponse<>(res));
     }
 
     private Long getUserId(HttpServletRequest servletRequest) {
