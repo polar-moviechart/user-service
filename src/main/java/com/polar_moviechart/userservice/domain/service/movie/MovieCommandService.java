@@ -37,7 +37,7 @@ public class MovieCommandService {
     }
 
     @Transactional
-    public UpdateMovieLikeRes updateLike(Long userId, int code, UpdateMovieLikeReq req) {
+    public MovieLikeRes updateLike(Long userId, int code, UpdateMovieLikeReq req) {
         movieValidationService.validateMovieExists(code);
         MovieLike movieLike = movieLikeCommandService.updateLike(code, getUser(userId), req);
         return movieLike.toDto();

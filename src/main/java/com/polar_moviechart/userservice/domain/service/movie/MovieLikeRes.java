@@ -4,13 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UpdateMovieLikeRes {
+public class MovieLikeRes {
     private Long userId;
     private Integer code;
     private Boolean isLike;
 
     @Builder
-    public UpdateMovieLikeRes(Long userId, Integer code, Boolean isLike) {
+    public MovieLikeRes(Long userId, Integer code, Boolean isLike) {
         this.userId = userId;
         this.code = code;
         this.isLike = isLike;

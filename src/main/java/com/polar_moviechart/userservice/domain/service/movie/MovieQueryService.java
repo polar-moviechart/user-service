@@ -10,6 +10,7 @@ public class MovieQueryService {
 
     private final MovieReviewQueryService movieReviewQueryService;
     private final MovieRatingQueryService movieRatingQueryService;
+    private final MovieLikeQueryService movieLikeQueryService;
 
     public Double getUserMovieRating(int code, Long userId) {
         return movieRatingQueryService.getUserMovieRating(code, userId);
@@ -17,5 +18,9 @@ public class MovieQueryService {
 
     public MovieReviewRes getReview(Long userId, int code) {
         return movieReviewQueryService.getReview(userId, code);
+    }
+
+    public MovieLikeRes getLike(Long userId, int code) {
+        return movieLikeQueryService.getLikeRes(userId, code);
     }
 }

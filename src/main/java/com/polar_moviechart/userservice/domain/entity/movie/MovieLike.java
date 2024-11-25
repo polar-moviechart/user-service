@@ -1,6 +1,6 @@
 package com.polar_moviechart.userservice.domain.entity.movie;
 
-import com.polar_moviechart.userservice.domain.service.movie.UpdateMovieLikeRes;
+import com.polar_moviechart.userservice.domain.service.movie.MovieLikeRes;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -48,8 +48,8 @@ public class MovieLike {
         this.isLike = isLike;
     }
 
-    public UpdateMovieLikeRes toDto() {
-        return UpdateMovieLikeRes.builder()
+    public MovieLikeRes toDto() {
+        return MovieLikeRes.builder()
                 .userId(userId)
                 .code(code)
                 .isLike(isLike)

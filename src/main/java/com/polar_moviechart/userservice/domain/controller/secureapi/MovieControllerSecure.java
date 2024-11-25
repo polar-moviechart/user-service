@@ -4,7 +4,7 @@ import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateM
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
-import com.polar_moviechart.userservice.domain.service.movie.UpdateMovieLikeRes;
+import com.polar_moviechart.userservice.domain.service.movie.MovieLikeRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.AddReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
@@ -49,7 +49,6 @@ public class MovieControllerSecure {
             HttpServletRequest servletRequest,
             @PathVariable("code") int code,
             @Valid @RequestBody AddReviewReq req) {
-        movieQueryService.validateMovieExists(code);
         AddReviewRes addReviewRes = movieCommandService.addReview(code, getUserId(servletRequest), req);
 
         return ok(new CustomResponse<>(addReviewRes));
@@ -66,13 +65,22 @@ public class MovieControllerSecure {
     }
 
     @PostMapping("/{code}/likes")
-    public ResponseEntity<CustomResponse<UpdateMovieLikeRes>> updateLike(
+    public ResponseEntity<CustomResponse<MovieLikeRes>> updateLike(
             HttpServletRequest servletRequest,
             @PathVariable("code") int code,
             @RequestBody UpdateMovieLikeReq req) {
-        UpdateMovieLikeRes updateMovieLikeRes = movieCommandService.updateLike(getUserId(servletRequest), code, req);
+        MovieLikeRes movieLikeRes = movieCommandService.updateLike(getUserId(servletRequest), code, req);
 
-        return ok(new CustomResponse<>(updateMovieLikeRes));
+        return ok(new CustomResponse<>(movieLikeRes));
+    }
+
+    @GetMapping("/{code}/likes")
+    public ResponseEntity<CustomResponse<MovieLikeRes>> getLike(
+            HttpServletRequest servletRequest,
+            @PathVariable("code") int code) {
+        MovieLikeRes movieLikeRes = movieQueryService.getLike(getUserId(servletRequest), code);
+
+        return ok(new CustomResponse<>(movieLikeRes));
     }
 
     private Long getUserId(HttpServletRequest servletRequest) {
