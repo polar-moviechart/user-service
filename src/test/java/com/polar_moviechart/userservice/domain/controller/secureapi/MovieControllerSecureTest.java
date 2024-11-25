@@ -2,7 +2,8 @@ package com.polar_moviechart.userservice.domain.controller.secureapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
-import com.polar_moviechart.userservice.domain.service.*;
+import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
+import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +24,8 @@ class MovieControllerSecureTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean private MovieService movieService;
+    @MockBean private MovieQueryService movieQueryService;
+    @MockBean private MovieCommandService movieCommandService;
 
     @Test
     void addReview_InvalidRequest_ReturnsBadRequest() throws Exception {

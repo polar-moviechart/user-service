@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.service;
+package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.domain.entity.MovieReview;
 import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
