@@ -1,7 +1,7 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateLikeReq;
+import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieLikeReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
@@ -36,7 +36,7 @@ public class MovieCommandService {
     }
 
     @Transactional
-    public MovieLikeRes updateLike(Long userId, int code, UpdateLikeReq req) {
+    public UpdateMovieLikeRes updateLike(Long userId, int code, UpdateMovieLikeReq req) {
         movieQueryService.validateMovieExists(code);
         MovieLike movieLike = movieLikeCommandService.updateLike(code, getUser(userId), req);
         return movieLike.toDto();
