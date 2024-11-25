@@ -93,6 +93,14 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(reviews));
     }
 
+    @GetMapping("/likes")
+    public ResponseEntity<CustomResponse<List<MovieLikeRes>>> getUserMovieLikes(
+            HttpServletRequest servletRequest) {
+        Long userId = getUserId(servletRequest);
+        List<MovieLikeRes> likes = movieQueryService.getUserMovieLikes(userId);
+        return ok(new CustomResponse<>(likes));
+    }
+
     private Long getUserId(HttpServletRequest servletRequest) {
         return Long.parseLong(servletRequest.getHeader("X-User-Id"));
     }

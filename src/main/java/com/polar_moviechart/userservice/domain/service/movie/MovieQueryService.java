@@ -29,4 +29,8 @@ public class MovieQueryService {
     public List<MovieReviewRes> getUserMovieReviews(Long userId) {
         return movieReviewQueryService.getUserMovieReviews(userId);
     }
+
+    public List<MovieLikeRes> getUserMovieLikes(Long userId) {
+        return movieLikeQueryService.getUserMovieLikes(userId);
+    }
 }
