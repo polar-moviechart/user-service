@@ -3,7 +3,7 @@ package com.polar_moviechart.userservice.domain.controller.secureapi;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
-import com.polar_moviechart.userservice.domain.service.movie.AddReviewRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.AddReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
 import com.polar_moviechart.userservice.utils.CustomResponse;

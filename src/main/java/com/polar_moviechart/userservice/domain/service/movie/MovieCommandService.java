@@ -2,6 +2,7 @@ package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.AddReviewRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
