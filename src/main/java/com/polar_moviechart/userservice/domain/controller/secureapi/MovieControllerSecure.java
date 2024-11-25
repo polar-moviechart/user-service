@@ -1,9 +1,6 @@
 package com.polar_moviechart.userservice.domain.controller.secureapi;
 
-import com.polar_moviechart.userservice.domain.service.AddReviewRes;
-import com.polar_moviechart.userservice.domain.service.MovieRatingCommandService;
-import com.polar_moviechart.userservice.domain.service.MovieReviewQueryService;
-import com.polar_moviechart.userservice.domain.service.MovieValidationService;
+import com.polar_moviechart.userservice.domain.service.*;
 import com.polar_moviechart.userservice.utils.CustomResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -18,6 +15,7 @@ public class MovieControllerSecure {
     private final MovieReviewQueryService movieReviewQueryService;
     private final MovieValidationService movieValidationService;
     private final MovieRatingCommandService movieRatingCommandService;
+    private final MovieRatingQueryService movieRatingQueryService;
 
 
     @PostMapping("/{code}/rating")
@@ -29,6 +27,15 @@ public class MovieControllerSecure {
         double ratingValue = movieRatingCommandService.updateRating(code, userId, updateRatingRequest);
 
         return ResponseEntity.ok(new CustomResponse<>(ratingValue));
+    }
+
+    @GetMapping("/{code}/rating")
+    public ResponseEntity<CustomResponse<Double>> getMovieRating(HttpServletRequest request,
+                                                                 @PathVariable(name = "code") int code) {
+        Long userId = (Long) request.getAttribute("userId");
+        Double movieRating = movieRatingQueryService.getUserMovieRating(code, userId);
+
+        return ResponseEntity.ok(new CustomResponse<>(movieRating));
     }
 
     @PostMapping("/{code}/reviews")
