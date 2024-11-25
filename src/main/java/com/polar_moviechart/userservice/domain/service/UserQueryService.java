@@ -3,6 +3,8 @@ package com.polar_moviechart.userservice.domain.service;
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.domain.repository.UserRepository;
+import com.polar_moviechart.userservice.exception.ErrorCode;
+import com.polar_moviechart.userservice.exception.UserBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,11 @@ public class UserQueryService {
 
     public boolean isExists(Long userId) {
         return userRepository.existsById(userId);
+    }
+
+    public void validateExist(Long userId) {
+        if (!isExists(userId)) {
+            throw new UserBusinessException(ErrorCode.USER_NOT_EXISTS);
+        }
     }
 }
