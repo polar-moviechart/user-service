@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.ResponseEntity.*;
 
 @RestController
@@ -81,6 +83,14 @@ public class MovieControllerSecure {
         MovieLikeRes movieLikeRes = movieQueryService.getLike(getUserId(servletRequest), code);
 
         return ok(new CustomResponse<>(movieLikeRes));
+    }
+
+    @GetMapping("/reviews")
+    public ResponseEntity<CustomResponse<List<MovieReviewRes>>> getUserMovieReviews(
+            HttpServletRequest servletRequest) {
+        Long userId = getUserId(servletRequest);
+        List<MovieReviewRes> reviews = movieQueryService.getUserMovieReviews(userId);
+        return ok(new CustomResponse<>(reviews));
     }
 
     private Long getUserId(HttpServletRequest servletRequest) {
