@@ -44,15 +44,14 @@ class MovieRatingCommandServiceTest extends MovieRatingTestConfig {
     @Test
     void updateRatingTest_whenRatingDoesNotExists() {
         // given
-        Long userId = getUserId(0);
         int movieCode = movieCodes.get(0);
         double ratingValue = 5.5;
         UpdateRatingRequest updateRatingRequest = new UpdateRatingRequest(ratingValue);
 
         // when
-        movieRatingCommandService.updateRating(movieCode, userId, updateRatingRequest);
+        movieRatingCommandService.updateRating(movieCode, getUser(0), updateRatingRequest);
         // then
-        Optional<MovieRating> savedRating = movieRatingRepository.findByCodeAndUserId(movieCode, userId);
+        Optional<MovieRating> savedRating = movieRatingRepository.findByCodeAndUserId(movieCode, getUserId(0));
         assertTrue(savedRating.isPresent());
         assertEquals(ratingValue, savedRating.get().getRating());
     }
@@ -62,7 +61,6 @@ class MovieRatingCommandServiceTest extends MovieRatingTestConfig {
     void updateRatingTest_whenRatingExists() {
         // given
         Long userId = getUserId(1);
-
         MovieRating existingMovieRating = movieRatingRepository
                 .findByCodeAndUserId(movieCodes.get(0), userId).get();
         Integer existingMovieCode = existingMovieRating.getCode();
@@ -70,7 +68,7 @@ class MovieRatingCommandServiceTest extends MovieRatingTestConfig {
         double newRatingValue = 2.0;
         UpdateRatingRequest updateRatingRequest = new UpdateRatingRequest(newRatingValue);
         // when
-        movieRatingCommandService.updateRating(existingMovieCode, userId, updateRatingRequest);
+        movieRatingCommandService.updateRating(existingMovieCode, getUser(1), updateRatingRequest);
         MovieRating updatedMovieRating = movieRatingRepository
                 .findByCodeAndUserId(existingMovieCode, userId).get();
         // then

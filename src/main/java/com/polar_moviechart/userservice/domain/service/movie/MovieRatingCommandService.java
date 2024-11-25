@@ -2,6 +2,7 @@ package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.MovieRating;
+import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.domain.repository.MovieRatingRepository;
 import com.polar_moviechart.userservice.domain.service.MovieValidationService;
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
@@ -14,24 +15,21 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MovieRatingCommandService {
-
-    private final UserQueryService userQueryService;
     private final MovieRatingRepository movieRatingRepository;
     private final MovieValidationService movieValidationService;
 
     @Transactional
-    public double updateRating(int code, Long userId, UpdateRatingRequest updateRatingRequest) {
+    public double updateRating(int code, User user, UpdateRatingRequest updateRatingRequest) {
         double ratingValue = updateRatingRequest.getRating();
 
-        userQueryService.validateExist(userId);
-        Optional<MovieRating> movieRatingOptional = movieRatingRepository.findByCodeAndUserId(code, userId);
+        Optional<MovieRating> movieRatingOptional = movieRatingRepository.findByCodeAndUserId(code, user.getId());
 
         if (movieRatingOptional.isPresent()) {
             MovieRating movieRating = movieRatingOptional.get();
             movieRating.setRating(ratingValue);
         } else {
             movieValidationService.validateMovieExists(code);
-            MovieRating movieRating = new MovieRating(userId, code, ratingValue);
+            MovieRating movieRating = new MovieRating(user.getId(), code, ratingValue);
             movieRatingRepository.save(movieRating);
         }
         return ratingValue;
