@@ -1,5 +1,6 @@
 package com.polar_moviechart.userservice.domain.entity;
 
+import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -42,5 +43,14 @@ public class MovieReview {
         this.userId = userId;
         this.code = code;
         this.content = content;
+    }
+
+    public MovieReviewRes toDto() {
+        return MovieReviewRes.builder()
+                .userId(userId)
+                .code(this.code)
+                .content(content)
+                .createdAt(createdAt)
+                .build();
     }
 }

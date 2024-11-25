@@ -13,21 +13,26 @@ public abstract class MovieReviewTestConfig extends UserTestConfig {
     private Integer reviewCnt;
     private List<Integer> movieCodes;
 
-    protected void initMovieReviews(Integer reviewCnt) {
+    protected void initMovieReviews(Integer reviewCnt, List<Integer> movieCodes) {
         this.reviewCnt = reviewCnt;
+        this.movieCodes = movieCodes;
         List<User> users = getUsers();
         setUpMovieReviews(users);
     }
 
     private void setUpMovieReviews(List<User> users) {
-        for (User user : users) {
-            for (int i = 1; i <= reviewCnt; i++) {
-                MovieReview movieReview = MovieReview.builder()
-                        .code(i)
-                        .content("review" + i)
-                        .userId(user.getId())
-                        .build();
-                movieReviewRepository.save(movieReview);
+        for (Integer movieCode : movieCodes) {
+
+            for (User user : users) {
+
+                for (int i = 1; i <= reviewCnt; i++) {
+                    MovieReview movieReview = MovieReview.builder()
+                            .code(movieCode)
+                            .content("review" + i)
+                            .userId(user.getId())
+                            .build();
+                    movieReviewRepository.save(movieReview);
+                }
             }
         }
     }
