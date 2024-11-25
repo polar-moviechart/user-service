@@ -1,10 +1,10 @@
 package com.polar_moviechart.userservice.domain.controller.secureapi;
 
+import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AccessTokenDto;
 import com.polar_moviechart.userservice.domain.entity.Role;
 import com.polar_moviechart.userservice.domain.service.jwt.JwtProvider;
 import com.polar_moviechart.userservice.utils.CustomResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,7 @@
 package com.polar_moviechart.userservice.domain.controller.secureapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
 import com.polar_moviechart.userservice.domain.service.MovieRatingCommandService;
 import com.polar_moviechart.userservice.domain.service.MovieRatingQueryService;
 import com.polar_moviechart.userservice.domain.service.MovieReviewQueryService;

@@ -1,6 +1,6 @@
 package com.polar_moviechart.userservice.domain.service;
 
-import com.polar_moviechart.userservice.domain.controller.secureapi.AddReviewReq;
+import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
 import com.polar_moviechart.userservice.domain.entity.MovieReview;
 import com.polar_moviechart.userservice.domain.repository.MovieReviewRepository;
 import lombok.RequiredArgsConstructor;
