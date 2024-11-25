@@ -20,7 +20,7 @@ class MovieReviewRepositoryTest extends MovieReviewTestConfig {
     void setUp() {
         initUsers(1);
         this.user = getUsers().get(0);
-        initMovieReviews(1);
+        initMovieReviews(1, List.of(1));
     }
 
     @DisplayName("유저 아이디로 영화 리뷰를 조회할 수 있다.")
