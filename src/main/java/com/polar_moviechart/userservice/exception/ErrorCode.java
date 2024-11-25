@@ -12,7 +12,8 @@ public enum ErrorCode {
     MOVIE_NOT_EXISTS("U103", "영화가 존재하지 않습니다."),
     USER_NOT_EXISTS("U104", "유저가 존재하지 않습니다."),
     RATING_NOT_EXISTS("U105", "영화 평점이 존재하지 않습니다."),
-    REVIEW_NOT_EXISTS("U106", "리뷰가 존재하지 않습니다.");
+    REVIEW_NOT_EXISTS("U106", "리뷰가 존재하지 않습니다."),
+    LIKE_NOT_EXIST("U107","좋아요가 존재하지 않습니다." );
 
     private String code = "U101";
     private final String message;
