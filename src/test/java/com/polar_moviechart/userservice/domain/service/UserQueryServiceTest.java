@@ -26,13 +26,13 @@ class UserQueryServiceTest extends UserTestConfig {
 
     @Test
     void getUserExists() {
-        Optional<User> userOptional = userQueryService.getUser(AuthType.KAKAO, 1L);
+        Optional<User> userOptional = userQueryService.getUserOptional(AuthType.KAKAO, 1L);
         assertTrue(userOptional.isPresent());
     }
 
     @Test
     void getUserDoesntExists() {
-        Optional<User> userOptional = userQueryService.getUser(AuthType.KAKAO, 10L);
+        Optional<User> userOptional = userQueryService.getUserOptional(AuthType.KAKAO, 10L);
         assertTrue(userOptional.isEmpty());
     }
 

@@ -1,5 +1,6 @@
-package com.polar_moviechart.userservice.domain.entity;
+package com.polar_moviechart.userservice.domain.entity.movie;
 
+import com.polar_moviechart.userservice.domain.service.movie.MovieLikeRes;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,10 +14,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "movie_ratings")
+@Table(name = "movie_likes")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class MovieRating {
+public class MovieLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,33 +28,31 @@ public class MovieRating {
     @Column(name = "code", nullable = false)
     private Integer code;
 
-    @Column(nullable = false)
-    private Double rating;
+    @Column(name = "isLike", nullable = false)
+    private Boolean isLike;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @Builder
-    public MovieRating(Long userId, Integer movieCode, Double rating) {
+    public MovieLike(Long userId, Integer code, Boolean isLike) {
         this.userId = userId;
-        this.code = movieCode;
-        this.rating = rating;
+        this.code = code;
+        this.isLike = isLike;
     }
 
-    public MovieRating(Long userId, Integer movieCode, Double rating, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.userId = userId;
-        this.code = movieCode;
-        this.rating = rating;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public void setIsLike(Boolean isLike) {
+        this.isLike = isLike;
     }
 
-    public void setRating(double ratingValue) {
-        this.rating = ratingValue;
+    public MovieLikeRes toDto() {
+        return MovieLikeRes.builder()
+                .userId(userId)
+                .code(code)
+                .isLike(isLike)
+                .build();
     }
 }
