@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.entity;
+package com.polar_moviechart.userservice.domain.entity.movie;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
