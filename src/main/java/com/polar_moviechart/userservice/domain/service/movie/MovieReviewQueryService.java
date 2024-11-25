@@ -8,6 +8,7 @@ import com.polar_moviechart.userservice.exception.UserBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +19,16 @@ public class MovieReviewQueryService {
     public MovieReviewRes getReview(Long userId, int code) {
         Optional<MovieReview> reviewOptional = movieReviewRepository
                 .findByUserIdAndCode(userId, code);
-        MovieReview movieReview = reviewOptional
-                .orElseThrow(() -> new UserBusinessException(ErrorCode.REVIEW_NOT_EXISTS));
+        MovieReview movieReview = reviewOptional.orElseThrow(() ->
+                new UserBusinessException(ErrorCode.REVIEW_NOT_EXISTS));
         return movieReview.toDto();
+    }
+
+    public List<MovieReviewRes> getUserMovieReviews(Long userId) {
+        List<MovieReview> movieReviews = movieReviewRepository.findByUserId(userId);
+        if (movieReviews.isEmpty()) {
+            throw new UserBusinessException(ErrorCode.REVIEW_NOT_EXISTS);
+        }
+        return MovieReviewRes.listFrom(movieReviews);
     }
 }
