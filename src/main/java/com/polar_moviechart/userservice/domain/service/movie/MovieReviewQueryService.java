@@ -1,7 +1,7 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.domain.entity.movie.MovieReview;
-import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
 import com.polar_moviechart.userservice.domain.repository.movie.MovieReviewRepository;
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.UserBusinessException;

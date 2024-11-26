@@ -3,8 +3,9 @@ package com.polar_moviechart.userservice.domain.controller.secureapi;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieLikeReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
-import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
-import com.polar_moviechart.userservice.domain.service.movie.MovieLikeRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.AddReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
@@ -12,6 +13,7 @@ import com.polar_moviechart.userservice.utils.CustomResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +58,7 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(addReviewRes));
     }
 
+    // TODO: update로 로직 바꾸기
     @GetMapping("/{code}/reviews")
     public ResponseEntity<CustomResponse<MovieReviewRes>> getReview(
             HttpServletRequest servletRequest,
@@ -85,6 +88,7 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(movieLikeRes));
     }
 
+    // TODO: pageable로 변경
     @GetMapping("/reviews")
     public ResponseEntity<CustomResponse<List<MovieReviewRes>>> getUserMovieReviews(
             HttpServletRequest servletRequest) {
@@ -93,12 +97,24 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(reviews));
     }
 
+    // TODO: pageable로 변경
     @GetMapping("/likes")
     public ResponseEntity<CustomResponse<List<MovieLikeRes>>> getUserMovieLikes(
             HttpServletRequest servletRequest) {
         Long userId = getUserId(servletRequest);
         List<MovieLikeRes> likes = movieQueryService.getUserMovieLikes(userId);
         return ok(new CustomResponse<>(likes));
+    }
+
+    @GetMapping
+    public ResponseEntity<CustomResponse<List<MovieRatingRes>>> getUserMovieRatings(
+            HttpServletRequest servletRequest,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        List<MovieRatingRes> ratings = movieQueryService
+                .getUserMovieRatings(getUserId(servletRequest), pageable);
+        return ok(new CustomResponse<>(ratings));
     }
 
     private Long getUserId(HttpServletRequest servletRequest) {
