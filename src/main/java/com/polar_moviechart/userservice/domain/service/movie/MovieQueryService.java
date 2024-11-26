@@ -1,8 +1,10 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +35,9 @@ public class MovieQueryService {
 
     public List<MovieLikeRes> getUserMovieLikes(Long userId) {
         return movieLikeQueryService.getUserMovieLikes(userId);
+    }
+
+    public List<MovieRatingRes> getUserMovieRatings(Long userId, PageRequest pageable) {
+        return movieRatingQueryService.getUserMovieRatings(userId, pageable);
     }
 }
