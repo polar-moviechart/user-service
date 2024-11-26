@@ -87,7 +87,6 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(movieLikeRes));
     }
 
-    // TODO: pageable로 변경
     @GetMapping("/reviews")
     public ResponseEntity<CustomResponse<List<MovieReviewRes>>> getUserMovieReviews(
             HttpServletRequest servletRequest,
