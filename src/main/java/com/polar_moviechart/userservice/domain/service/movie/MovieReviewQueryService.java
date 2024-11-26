@@ -6,6 +6,7 @@ import com.polar_moviechart.userservice.domain.repository.movie.MovieReviewRepos
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.UserBusinessException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +25,8 @@ public class MovieReviewQueryService {
         return movieReview.toDto();
     }
 
-    public List<MovieReviewRes> getUserMovieReviews(Long userId) {
-        List<MovieReview> movieReviews = movieReviewRepository.findByUserId(userId);
+    public List<MovieReviewRes> getUserMovieReviews(Long userId, PageRequest pageable) {
+        List<MovieReview> movieReviews = movieReviewRepository.findByUserId(userId, pageable);
         if (movieReviews.isEmpty()) {
             throw new UserBusinessException(ErrorCode.REVIEW_NOT_EXISTS);
         }
