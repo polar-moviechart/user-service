@@ -5,9 +5,9 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor
-public class AddReviewReq {
+public class UpdateMovieReviewReq {
     @Builder
-    public AddReviewReq(String content) {
+    public UpdateMovieReviewReq(String content) {
         this.content = content;
     }
     @NotBlank(message = "한 글자 이상 리뷰를 작성해주세요.")

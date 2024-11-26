@@ -1,12 +1,12 @@
 package com.polar_moviechart.userservice.domain.controller.secureapi;
 
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieLikeReq;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
+import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieReviewReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
-import com.polar_moviechart.userservice.domain.service.movie.dtos.AddReviewRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.UpdateReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
 import com.polar_moviechart.userservice.utils.CustomResponse;
@@ -49,16 +49,15 @@ public class MovieControllerSecure {
     }
 
     @PostMapping("/{code}/reviews")
-    public ResponseEntity<CustomResponse<AddReviewRes>> addReview(
+    public ResponseEntity<CustomResponse<UpdateReviewRes>> updateReview(
             HttpServletRequest servletRequest,
             @PathVariable("code") int code,
-            @Valid @RequestBody AddReviewReq req) {
-        AddReviewRes addReviewRes = movieCommandService.addReview(code, getUserId(servletRequest), req);
+            @Valid @RequestBody UpdateMovieReviewReq req) {
+        UpdateReviewRes updateReviewRes = movieCommandService.updateReview(code, getUserId(servletRequest), req);
 
-        return ok(new CustomResponse<>(addReviewRes));
+        return ok(new CustomResponse<>(updateReviewRes));
     }
 
-    // TODO: update로 로직 바꾸기
     @GetMapping("/{code}/reviews")
     public ResponseEntity<CustomResponse<MovieReviewRes>> getReview(
             HttpServletRequest servletRequest,

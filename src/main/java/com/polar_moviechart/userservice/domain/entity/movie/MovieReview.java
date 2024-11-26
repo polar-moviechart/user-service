@@ -53,4 +53,8 @@ public class MovieReview {
                 .createdAt(createdAt)
                 .build();
     }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
