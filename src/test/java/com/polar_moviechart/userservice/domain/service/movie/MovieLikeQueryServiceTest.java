@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -54,6 +55,7 @@ class MovieLikeQueryServiceTest extends UserTestConfig {
             movieLikeRepository.save(req.toEntity(movieCode, user));
         }
         // then
-        assertEquals(2, movieLikeQueryService.getUserMovieLikes(user.getId()).size());
+        PageRequest pageable = PageRequest.of(0, 10);
+        assertEquals(2, movieLikeQueryService.getUserMovieLikes(user.getId(), pageable).size());
     }
 }
