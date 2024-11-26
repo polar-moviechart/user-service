@@ -4,11 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class AddReviewRes {
+public class UpdateReviewRes {
     private Long reviewId;
 
     @Builder
-    public AddReviewRes(Long reviewId) {
+    public UpdateReviewRes(Long reviewId) {
         this.reviewId = reviewId;
     }
 }
