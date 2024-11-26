@@ -6,9 +6,9 @@ import com.polar_moviechart.userservice.domain.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -27,7 +27,8 @@ class MovieReviewRepositoryTest extends MovieReviewTestConfig {
     @Test
     void findByUserId() {
         // given // when
-        List<MovieReview> movieReview = movieReviewRepository.findByUserId(user.getId());
+        PageRequest pageable = PageRequest.of(0, 10);
+        List<MovieReview> movieReview = movieReviewRepository.findByUserId(user.getId(), pageable);
         // then
         assertThat(movieReview.size()).isNotNull();
     }
