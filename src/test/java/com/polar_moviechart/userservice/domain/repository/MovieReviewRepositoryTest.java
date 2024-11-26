@@ -20,15 +20,15 @@ class MovieReviewRepositoryTest extends MovieReviewTestConfig {
     void setUp() {
         initUsers(1);
         this.user = getUsers().get(0);
-        initMovieReviews(1, List.of(1));
+        initMovieReviews(1, List.of(1), getUsers());
     }
 
     @DisplayName("유저 아이디로 영화 리뷰를 조회할 수 있다.")
     @Test
     void findByUserId() {
         // given // when
-        Optional<List<MovieReview>> movieReviewOptional = movieReviewRepository.findByUserId(user.getId());
+        List<MovieReview> movieReview = movieReviewRepository.findByUserId(user.getId());
         // then
-        assertThat(movieReviewOptional).isPresent();
+        assertThat(movieReview.size()).isNotNull();
     }
 }

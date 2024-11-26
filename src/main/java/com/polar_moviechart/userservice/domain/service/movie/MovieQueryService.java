@@ -4,6 +4,8 @@ import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MovieQueryService {
@@ -22,5 +24,13 @@ public class MovieQueryService {
 
     public MovieLikeRes getLike(Long userId, int code) {
         return movieLikeQueryService.getLikeRes(userId, code);
+    }
+
+    public List<MovieReviewRes> getUserMovieReviews(Long userId) {
+        return movieReviewQueryService.getUserMovieReviews(userId);
+    }
+
+    public List<MovieLikeRes> getUserMovieLikes(Long userId) {
+        return movieLikeQueryService.getUserMovieLikes(userId);
     }
 }

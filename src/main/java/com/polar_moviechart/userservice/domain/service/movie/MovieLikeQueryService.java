@@ -7,7 +7,7 @@ import com.polar_moviechart.userservice.exception.UserBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,4 +27,9 @@ public class MovieLikeQueryService {
             return movieLikeRepository.findByUserIdAndCode(userId, code)
                     .orElseThrow(() -> new UserBusinessException(ErrorCode.LIKE_NOT_EXIST));
         }
+
+    public List<MovieLikeRes> getUserMovieLikes(Long userId) {
+        List<MovieLike> movieLikes = movieLikeRepository.findByUserId(userId);
+        return MovieLikeRes.listFrom(movieLikes);
+    }
 }

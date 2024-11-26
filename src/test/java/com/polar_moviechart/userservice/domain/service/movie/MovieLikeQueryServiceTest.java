@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MovieLikeQueryServiceTest extends UserTestConfig {
@@ -36,5 +38,22 @@ class MovieLikeQueryServiceTest extends UserTestConfig {
         // then
         MovieLike movieLike = movieLikeQueryService.getLike(user.getId(), code);
         assertEquals(user.getId(), movieLike.getUserId());
+    }
+
+    @DisplayName("user로 영화 좋아요 정보를 가져올 수 있다.")
+    @Test
+    void getUserMovieLikes_success() {
+        // given
+        User user = getUser(0);
+        UpdateMovieLikeReq req = UpdateMovieLikeReq.builder()
+                .isLike(true)
+                .build();
+        List<Integer> movieCodes = List.of(1, 2);
+        // when
+        for (Integer movieCode : movieCodes) {
+            movieLikeRepository.save(req.toEntity(movieCode, user));
+        }
+        // then
+        assertEquals(2, movieLikeQueryService.getUserMovieLikes(user.getId()).size());
     }
 }

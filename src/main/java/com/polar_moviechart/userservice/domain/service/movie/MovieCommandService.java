@@ -40,7 +40,7 @@ public class MovieCommandService {
     public MovieLikeRes updateLike(Long userId, int code, UpdateMovieLikeReq req) {
         movieValidationService.validateMovieExists(code);
         MovieLike movieLike = movieLikeCommandService.updateLike(code, getUser(userId), req);
-        return movieLike.toDto();
+        return MovieLikeRes.from(movieLike);
     }
 
     private User getUser(Long userId) {
