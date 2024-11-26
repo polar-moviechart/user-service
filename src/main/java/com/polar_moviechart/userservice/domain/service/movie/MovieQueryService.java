@@ -1,6 +1,7 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
-import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

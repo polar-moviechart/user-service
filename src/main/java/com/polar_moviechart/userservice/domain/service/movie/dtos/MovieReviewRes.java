@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.entity.dto;
+package com.polar_moviechart.userservice.domain.service.movie.dtos;
 
 import com.polar_moviechart.userservice.domain.entity.movie.MovieReview;
 import lombok.Builder;

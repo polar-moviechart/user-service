@@ -3,8 +3,8 @@ package com.polar_moviechart.userservice.domain.controller.secureapi;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieLikeReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
-import com.polar_moviechart.userservice.domain.entity.dto.MovieReviewRes;
-import com.polar_moviechart.userservice.domain.service.movie.MovieLikeRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.AddReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
@@ -99,6 +99,13 @@ public class MovieControllerSecure {
         Long userId = getUserId(servletRequest);
         List<MovieLikeRes> likes = movieQueryService.getUserMovieLikes(userId);
         return ok(new CustomResponse<>(likes));
+    }
+
+    @GetMapping
+    public ResponseEntity<CustomResponse<List<MovieRatingRes>>> getUserMovieRatings(
+            HttpServletRequest servletRequest) {
+        List<MovieRatingRes> ratings = movieQueryService.getUserMovieRatings();
+        return ok(new CustomResponse<>(ratings));
     }
 
     private Long getUserId(HttpServletRequest servletRequest) {

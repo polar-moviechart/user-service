@@ -9,6 +9,7 @@ import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
 import com.polar_moviechart.userservice.domain.service.MovieValidationService;
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.AddReviewRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
