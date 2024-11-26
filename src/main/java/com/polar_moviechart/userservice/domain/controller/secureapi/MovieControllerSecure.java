@@ -96,12 +96,14 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(reviews));
     }
 
-    // TODO: pageable로 변경
     @GetMapping("/likes")
     public ResponseEntity<CustomResponse<List<MovieLikeRes>>> getUserMovieLikes(
-            HttpServletRequest servletRequest) {
+            HttpServletRequest servletRequest,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         Long userId = getUserId(servletRequest);
-        List<MovieLikeRes> likes = movieQueryService.getUserMovieLikes(userId);
+        PageRequest pageable = PageRequest.of(page, size);
+        List<MovieLikeRes> likes = movieQueryService.getUserMovieLikes(userId, pageable);
         return ok(new CustomResponse<>(likes));
     }
 
