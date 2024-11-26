@@ -1,7 +1,7 @@
 package com.polar_moviechart.userservice.domain.controller.secureapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AddReviewReq;
+import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieReviewReq;
 import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
 import org.junit.jupiter.api.Test;
@@ -30,8 +30,8 @@ class MovieControllerSecureTest {
     @Test
     void addReview_InvalidRequest_ReturnsBadRequest() throws Exception {
         String content = "";
-        AddReviewReq addReviewReq = new AddReviewReq(content);
-        String requestBody = objectMapper.writeValueAsString(addReviewReq);
+        UpdateMovieReviewReq updateMovieReviewReq = new UpdateMovieReviewReq(content);
+        String requestBody = objectMapper.writeValueAsString(updateMovieReviewReq);
 
         mockMvc.perform(post("/secure/api/v1/users/movies/123/reviews")
                         .header("X-User-Id", "1")

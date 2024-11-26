@@ -1,6 +1,5 @@
 package com.polar_moviechart.userservice.domain.entity.movie;
 
-import com.polar_moviechart.userservice.domain.service.movie.MovieLikeRes;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
