@@ -9,6 +9,7 @@ import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
 import com.polar_moviechart.userservice.domain.service.MovieValidationService;
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
 import com.polar_moviechart.userservice.domain.service.event.MovieLikeEventPublisher;
+import com.polar_moviechart.userservice.domain.service.event.dto.MessageType;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.UpdateReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class MovieCommandService {
         MovieLike movieLike = movieLikeCommandService.updateLike(code, getUser(userId), req);
 
         Integer movieLikes = movieQueryService.getMovieLikes(code);
-        movieLikeEventPublisher.publishLikeEvent(userId, code, movieLikes);
+        movieLikeEventPublisher.publishLikeEvent(userId, code, movieLikes, MessageType.LIKE);
         return MovieLikeRes.from(movieLike);
     }
 
