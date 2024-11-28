@@ -23,7 +23,7 @@ spring:
 
 rabbitmq:
   queue:
-    name: polar-rabbit
+    name: user-service
   exchange:
     name: polar-exchange
   routing:
