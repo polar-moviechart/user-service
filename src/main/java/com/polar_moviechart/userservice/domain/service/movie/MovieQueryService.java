@@ -40,4 +40,8 @@ public class MovieQueryService {
     public List<MovieRatingRes> getUserMovieRatings(Long userId, PageRequest pageable) {
         return movieRatingQueryService.getUserMovieRatings(userId, pageable);
     }
+
+    public Integer getMovieLikes(int code) {
+        return movieLikeQueryService.getMovieLikes(code);
+    }
 }

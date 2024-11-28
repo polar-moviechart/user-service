@@ -34,4 +34,8 @@ public class MovieLikeQueryService {
         List<MovieLike> movieLikes = movieLikeRepository.findByUserId(userId, pageable);
         return MovieLikeRes.listFrom(movieLikes);
     }
+
+    public Integer getMovieLikes(int code) {
+        return movieLikeRepository.countByCode(code);
+    }
 }
