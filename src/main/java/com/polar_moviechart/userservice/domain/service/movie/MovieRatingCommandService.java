@@ -27,6 +27,7 @@ public class MovieRatingCommandService {
             MovieRating movieRating = movieRatingOptional.get();
             movieRating.setRating(ratingValue);
         } else {
+            // TODO: movieValidationService.validateMovieExists(code); 삭제할 것
             movieValidationService.validateMovieExists(code);
             MovieRating movieRating = new MovieRating(user.getId(), code, ratingValue);
             movieRatingRepository.save(movieRating);
