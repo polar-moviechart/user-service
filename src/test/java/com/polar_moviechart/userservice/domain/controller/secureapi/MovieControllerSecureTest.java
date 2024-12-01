@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polar_moviechart.userservice.controller.secureapi.MovieControllerSecure;
 import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieReviewReq;
 import com.polar_moviechart.userservice.event.MovieEventPublisher;
-import com.polar_moviechart.userservice.event.MovieLikeEventPublisher;
 import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
 import org.junit.jupiter.api.Test;

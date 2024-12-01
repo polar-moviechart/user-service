@@ -7,7 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackages = {"com.polar_moviechart.userservice.domain.controller"})
+@RestControllerAdvice(basePackages = {"com.polar_moviechart.userservice.controller"})
 public class GlobalControllerAdvice {
 
     @ExceptionHandler(value = {RuntimeException.class})
