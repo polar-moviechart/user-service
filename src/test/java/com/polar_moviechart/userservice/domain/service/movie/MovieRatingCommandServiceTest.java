@@ -4,7 +4,7 @@ import com.polar_moviechart.userservice.domain.MovieRatingTestConfig;
 import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieRating;
 import com.polar_moviechart.userservice.repository.movie.MovieRatingRepository;
-import com.polar_moviechart.userservice.domain.service.MovieValidationService;
+import com.polar_moviechart.userservice.domain.service.MovieServiceHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class MovieRatingCommandServiceTest extends MovieRatingTestConfig {
     @Autowired
     private MovieRatingCommandService movieRatingCommandService;
     @MockBean
-    private MovieValidationService movieValidationService;
+    private MovieServiceHandler movieServiceHandler;
 
     private final List<Integer> movieCodes = List.of(1);
     private final List<Double> ratingValues = List.of(1.0);
@@ -36,7 +36,7 @@ class MovieRatingCommandServiceTest extends MovieRatingTestConfig {
         initUsers(2);
         initRating(ratingValues, List.of(getUser(1)));
         for (Integer movieCode : movieCodes) {
-            BDDMockito.willDoNothing().given(movieValidationService).validateMovieExists(movieCode);
+            BDDMockito.willDoNothing().given(movieServiceHandler).validateMovieExists(movieCode);
         }
     }
 

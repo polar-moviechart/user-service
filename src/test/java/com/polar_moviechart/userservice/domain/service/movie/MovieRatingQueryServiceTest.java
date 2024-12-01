@@ -2,7 +2,7 @@ package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.domain.entity.movie.MovieRating;
 import com.polar_moviechart.userservice.repository.movie.MovieRatingRepository;
-import com.polar_moviechart.userservice.domain.service.MovieValidationService;
+import com.polar_moviechart.userservice.domain.service.MovieServiceHandler;
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.UserBusinessException;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 class MovieRatingQueryServiceTest {
     @Mock
-    private MovieValidationService movieValidationService;
+    private MovieServiceHandler movieServiceHandler;
     @InjectMocks
     private MovieRatingQueryService ratingQueryService;
     @Mock
@@ -44,7 +44,7 @@ class MovieRatingQueryServiceTest {
         MovieRating movieRating = new MovieRating(userId, movieCode, expectedRating);
 
         doNothing()
-                .when(movieValidationService)
+                .when(movieServiceHandler)
                 .validateMovieExists(movieCode);
         when(ratingRepository.findByCodeAndUserId(movieCode, userId))
                 .thenReturn(Optional.of(movieRating));
@@ -58,7 +58,7 @@ class MovieRatingQueryServiceTest {
     @Test
     void validateUserExists_userNotExists() {
         // given
-        doNothing().when(movieValidationService).validateMovieExists(movieCode);
+        doNothing().when(movieServiceHandler).validateMovieExists(movieCode);
         when(ratingRepository.findByCodeAndUserId(movieCode, userId)).thenReturn(Optional.empty());
         // when then
         UserBusinessException exception = assertThrows(UserBusinessException.class,
@@ -72,7 +72,7 @@ class MovieRatingQueryServiceTest {
     void validateUserExists_movieNotExists() {
         // given
         BDDMockito.doThrow(new UserBusinessException(ErrorCode.MOVIE_NOT_EXISTS))
-                        .when(movieValidationService)
+                        .when(movieServiceHandler)
                         .validateMovieExists(movieCode);
         // when then
         UserBusinessException exception = assertThrows(UserBusinessException.class,
