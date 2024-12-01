@@ -21,11 +21,11 @@ public class MovieLikeEventPublisher {
 
     private final RabbitTemplate rabbitTemplate;
 
-    public void publishLikeEvent(Long userId, int movieCode, Integer likeCnt, MessageType like) {
+    public void publishLikeEvent(Long userId, int movieCode, boolean isLike, MessageType like) {
         MovieLikeMessageDto eventDto = MovieLikeMessageDto.builder()
                 .userId(userId)
                 .movieCode(movieCode)
-                .likeCnt(likeCnt)
+                .likeCnt(isLike ? 1 : -1)
                 .type(like)
                 .build();
 
