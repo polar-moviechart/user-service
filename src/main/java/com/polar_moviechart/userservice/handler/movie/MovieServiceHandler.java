@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.service;
+package com.polar_moviechart.userservice.handler.movie;
 
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.UserBusinessException;

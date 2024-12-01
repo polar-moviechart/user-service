@@ -4,7 +4,7 @@ import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRe
 import com.polar_moviechart.userservice.domain.entity.movie.MovieRating;
 import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.repository.movie.MovieRatingRepository;
-import com.polar_moviechart.userservice.domain.service.MovieServiceHandler;
+import com.polar_moviechart.userservice.handler.movie.MovieServiceHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

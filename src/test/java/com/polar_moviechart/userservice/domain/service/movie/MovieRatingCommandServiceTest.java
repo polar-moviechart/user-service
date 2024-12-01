@@ -4,7 +4,7 @@ import com.polar_moviechart.userservice.domain.MovieRatingTestConfig;
 import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieRating;
 import com.polar_moviechart.userservice.repository.movie.MovieRatingRepository;
-import com.polar_moviechart.userservice.domain.service.MovieServiceHandler;
+import com.polar_moviechart.userservice.handler.movie.MovieServiceHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

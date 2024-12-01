@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.service;
+package com.polar_moviechart.userservice.handler.movie;
 
 import com.polar_moviechart.userservice.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;

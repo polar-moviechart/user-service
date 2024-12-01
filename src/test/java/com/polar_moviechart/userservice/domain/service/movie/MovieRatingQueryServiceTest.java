@@ -2,7 +2,7 @@ package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.domain.entity.movie.MovieRating;
 import com.polar_moviechart.userservice.repository.movie.MovieRatingRepository;
-import com.polar_moviechart.userservice.domain.service.MovieServiceHandler;
+import com.polar_moviechart.userservice.handler.movie.MovieServiceHandler;
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.UserBusinessException;
 import org.junit.jupiter.api.BeforeEach;
