@@ -1,8 +1,10 @@
-package com.polar_moviechart.userservice.domain.controller.secureapi;
+package com.polar_moviechart.userservice.controller.secureapi;
 
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieLikeReq;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieReviewReq;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieReviewReq;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieLikeReq;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.handler.movie.MovieServiceHandler;
+import com.polar_moviechart.userservice.event.MovieEventPublisher;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
@@ -28,11 +30,14 @@ public class MovieControllerSecure {
 
     private final MovieQueryService movieQueryService;
     private final MovieCommandService movieCommandService;
+    private final MovieEventPublisher movieEventPublisher;
+    private final MovieServiceHandler movieServiceHandler;
 
     @PostMapping("/{code}/rating")
     public ResponseEntity<CustomResponse<Double>> updateRating(HttpServletRequest servletRequest,
                                                                @PathVariable(name = "code") int code,
                                                                @RequestBody UpdateRatingRequest updateRatingRequest) {
+        movieServiceHandler.validateMovieExists(code);
 
         double ratingValue = movieCommandService.updateRating(code, getUserId(servletRequest), updateRatingRequest);
 
@@ -43,6 +48,7 @@ public class MovieControllerSecure {
     public ResponseEntity<CustomResponse<Double>> getMovieRating(HttpServletRequest request,
                                                                  @PathVariable(name = "code") int code) {
         Long userId = (Long) request.getAttribute("userId");
+        movieServiceHandler.validateMovieExists(code);
         Double movieRating = movieQueryService.getUserMovieRating(code, userId);
 
         return ok(new CustomResponse<>(movieRating));
@@ -53,6 +59,8 @@ public class MovieControllerSecure {
             HttpServletRequest servletRequest,
             @PathVariable("code") int code,
             @Valid @RequestBody UpdateMovieReviewReq req) {
+        movieServiceHandler.validateMovieExists(code);
+
         UpdateReviewRes updateReviewRes = movieCommandService.updateReview(code, getUserId(servletRequest), req);
 
         return ok(new CustomResponse<>(updateReviewRes));
@@ -73,8 +81,12 @@ public class MovieControllerSecure {
             HttpServletRequest servletRequest,
             @PathVariable("code") int code,
             @RequestBody UpdateMovieLikeReq req) {
+        Long userId = getUserId(servletRequest);
+        movieServiceHandler.validateMovieExists(code);
+
         MovieLikeRes movieLikeRes = movieCommandService.updateLike(getUserId(servletRequest), code, req);
 
+        movieEventPublisher.publishLikeEvent(userId, code, req.getIsLike());
         return ok(new CustomResponse<>(movieLikeRes));
     }
 

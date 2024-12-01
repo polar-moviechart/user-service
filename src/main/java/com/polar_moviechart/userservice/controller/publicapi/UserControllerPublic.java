@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.controller.publicapi;
+package com.polar_moviechart.userservice.controller.publicapi;
 
 import com.polar_moviechart.userservice.domain.entity.Role;
 import com.polar_moviechart.userservice.domain.service.jwt.JwtProvider;

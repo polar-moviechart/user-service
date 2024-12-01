@@ -1,10 +1,9 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieRating;
 import com.polar_moviechart.userservice.domain.entity.User;
-import com.polar_moviechart.userservice.domain.repository.movie.MovieRatingRepository;
-import com.polar_moviechart.userservice.domain.service.MovieValidationService;
+import com.polar_moviechart.userservice.repository.movie.MovieRatingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MovieRatingCommandService {
     private final MovieRatingRepository movieRatingRepository;
-    private final MovieValidationService movieValidationService;
 
     @Transactional
     public double updateRating(int code, User user, UpdateRatingRequest updateRatingRequest) {
@@ -27,7 +25,6 @@ public class MovieRatingCommandService {
             MovieRating movieRating = movieRatingOptional.get();
             movieRating.setRating(ratingValue);
         } else {
-            movieValidationService.validateMovieExists(code);
             MovieRating movieRating = new MovieRating(user.getId(), code, ratingValue);
             movieRatingRepository.save(movieRating);
         }

@@ -2,7 +2,7 @@ package com.polar_moviechart.userservice.domain.service;
 
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
-import com.polar_moviechart.userservice.domain.repository.UserRepository;
+import com.polar_moviechart.userservice.repository.UserRepository;
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.UserBusinessException;
 import lombok.RequiredArgsConstructor;

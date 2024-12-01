@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.controller.secureapi.dtos;
+package com.polar_moviechart.userservice.controller.secureapi.dtos;
 
 import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
