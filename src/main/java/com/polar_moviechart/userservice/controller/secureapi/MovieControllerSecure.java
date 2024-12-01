@@ -48,6 +48,7 @@ public class MovieControllerSecure {
     public ResponseEntity<CustomResponse<Double>> getMovieRating(HttpServletRequest request,
                                                                  @PathVariable(name = "code") int code) {
         Long userId = (Long) request.getAttribute("userId");
+        movieServiceHandler.validateMovieExists(code);
         Double movieRating = movieQueryService.getUserMovieRating(code, userId);
 
         return ok(new CustomResponse<>(movieRating));
