@@ -3,6 +3,8 @@ package com.polar_moviechart.userservice.domain.controller.secureapi;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieLikeReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieReviewReq;
 import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.domain.service.event.MovieLikeEventPublisher;
+import com.polar_moviechart.userservice.domain.service.event.dto.MessageType;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
@@ -28,6 +30,7 @@ public class MovieControllerSecure {
 
     private final MovieQueryService movieQueryService;
     private final MovieCommandService movieCommandService;
+    private final MovieLikeEventPublisher movieLikeEventPublisher;
 
     @PostMapping("/{code}/rating")
     public ResponseEntity<CustomResponse<Double>> updateRating(HttpServletRequest servletRequest,
@@ -73,8 +76,10 @@ public class MovieControllerSecure {
             HttpServletRequest servletRequest,
             @PathVariable("code") int code,
             @RequestBody UpdateMovieLikeReq req) {
+        Long userId = getUserId(servletRequest);
         MovieLikeRes movieLikeRes = movieCommandService.updateLike(getUserId(servletRequest), code, req);
 
+        movieLikeEventPublisher.publishLikeEvent(userId, code, req.getIsLike(), MessageType.LIKE);
         return ok(new CustomResponse<>(movieLikeRes));
     }
 

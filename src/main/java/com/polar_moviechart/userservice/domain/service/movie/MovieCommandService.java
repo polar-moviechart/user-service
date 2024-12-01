@@ -43,13 +43,9 @@ public class MovieCommandService {
 
     @Transactional
     public MovieLikeRes updateLike(Long userId, int code, UpdateMovieLikeReq req) {
-        // TODO: api 트랜잭션 분리 필요
         movieValidationService.validateMovieExists(code);
         MovieLike movieLike = movieLikeCommandService.updateLike(code, getUser(userId), req);
 
-        // TODO: count query 사용 하지 말자
-//        Integer movieLikes = movieQueryService.getMovieLikes(code); // 10001
-        movieLikeEventPublisher.publishLikeEvent(userId, code, MessageType.LIKE);
         return MovieLikeRes.from(movieLike);
     }
 
