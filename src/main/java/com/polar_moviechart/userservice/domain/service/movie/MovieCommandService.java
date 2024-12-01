@@ -27,19 +27,16 @@ public class MovieCommandService {
 
     @Transactional
     public double updateRating(int code, Long userId, UpdateRatingRequest updateRatingRequest) {
-        movieServiceHandler.validateMovieExists(code);
         return movieRatingCommandService.updateRating(code, getUser(userId), updateRatingRequest);
     }
 
     @Transactional
     public UpdateReviewRes updateReview(int code, Long userId, UpdateMovieReviewReq req) {
-        movieServiceHandler.validateMovieExists(code);
         return movieReviewCommandService.updateReview(code, getUser(userId), req);
     }
 
     @Transactional
     public MovieLikeRes updateLike(Long userId, int code, UpdateMovieLikeReq req) {
-        movieServiceHandler.validateMovieExists(code);
         MovieLike movieLike = movieLikeCommandService.updateLike(code, getUser(userId), req);
 
         return MovieLikeRes.from(movieLike);
