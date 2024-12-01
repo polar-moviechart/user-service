@@ -2,7 +2,7 @@ package com.polar_moviechart.userservice.domain;
 
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
-import com.polar_moviechart.userservice.domain.repository.UserRepository;
+import com.polar_moviechart.userservice.repository.UserRepository;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

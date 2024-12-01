@@ -1,7 +1,7 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.domain.MovieReviewTestConfig;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieReviewReq;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieReviewReq;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieReview;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

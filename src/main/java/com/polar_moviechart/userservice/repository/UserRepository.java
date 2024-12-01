@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.repository;
+package com.polar_moviechart.userservice.repository;
 
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;

@@ -1,6 +1,6 @@
-package com.polar_moviechart.userservice.domain.controller.secureapi;
+package com.polar_moviechart.userservice.controller.secureapi;
 
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.AccessTokenDto;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.AccessTokenDto;
 import com.polar_moviechart.userservice.domain.entity.Role;
 import com.polar_moviechart.userservice.domain.service.jwt.JwtProvider;
 import com.polar_moviechart.userservice.utils.CustomResponse;

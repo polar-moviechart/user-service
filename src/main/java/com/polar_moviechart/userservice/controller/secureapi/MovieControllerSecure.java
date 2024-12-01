@@ -1,10 +1,10 @@
-package com.polar_moviechart.userservice.domain.controller.secureapi;
+package com.polar_moviechart.userservice.controller.secureapi;
 
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieLikeReq;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieReviewReq;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
-import com.polar_moviechart.userservice.domain.service.event.MovieLikeEventPublisher;
-import com.polar_moviechart.userservice.domain.service.event.dto.MessageType;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieReviewReq;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieLikeReq;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.event.MovieLikeEventPublisher;
+import com.polar_moviechart.userservice.event.dto.MessageType;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;

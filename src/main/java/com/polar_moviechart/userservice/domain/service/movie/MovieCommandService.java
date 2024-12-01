@@ -1,15 +1,14 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieReviewReq;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateMovieLikeReq;
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieReviewReq;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieLikeReq;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
 import com.polar_moviechart.userservice.domain.service.MovieValidationService;
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
-import com.polar_moviechart.userservice.domain.service.event.MovieLikeEventPublisher;
-import com.polar_moviechart.userservice.domain.service.event.dto.MessageType;
+import com.polar_moviechart.userservice.event.MovieLikeEventPublisher;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.UpdateReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import lombok.RequiredArgsConstructor;

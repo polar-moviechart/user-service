@@ -1,9 +1,9 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
-import com.polar_moviechart.userservice.domain.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRequest;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieRating;
 import com.polar_moviechart.userservice.domain.entity.User;
-import com.polar_moviechart.userservice.domain.repository.movie.MovieRatingRepository;
+import com.polar_moviechart.userservice.repository.movie.MovieRatingRepository;
 import com.polar_moviechart.userservice.domain.service.MovieValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

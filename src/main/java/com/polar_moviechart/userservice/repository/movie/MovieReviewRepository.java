@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.repository.movie;
+package com.polar_moviechart.userservice.repository.movie;
 
 import com.polar_moviechart.userservice.domain.entity.movie.MovieReview;
 import org.springframework.data.domain.PageRequest;

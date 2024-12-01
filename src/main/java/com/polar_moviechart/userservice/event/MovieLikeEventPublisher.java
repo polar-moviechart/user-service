@@ -1,7 +1,7 @@
-package com.polar_moviechart.userservice.domain.service.event;
+package com.polar_moviechart.userservice.event;
 
-import com.polar_moviechart.userservice.domain.service.event.dto.MessageType;
-import com.polar_moviechart.userservice.domain.service.event.dto.MovieLikeMessageDto;
+import com.polar_moviechart.userservice.event.dto.MessageType;
+import com.polar_moviechart.userservice.event.dto.MovieLikeMessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

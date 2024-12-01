@@ -1,4 +1,4 @@
-package com.polar_moviechart.userservice.domain.controller.secureapi.dtos;
+package com.polar_moviechart.userservice.controller.secureapi.dtos;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
