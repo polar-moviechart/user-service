@@ -33,4 +33,9 @@ public class UserQueryService {
             throw new UserBusinessException(ErrorCode.USER_NOT_EXISTS);
         }
     }
+
+    public User getUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserBusinessException(ErrorCode.USER_NOT_EXISTS));
+    }
 }
