@@ -4,29 +4,29 @@ import lombok.Builder;
 
 public class MovieLikeMessageDto implements MessageDto {
     private Long userId;
-    private Integer movieCode;
-    private Integer likeCnt;
+    private Integer code;
+    private Integer value;
     private MessageType type;
 
     @Builder
-    public MovieLikeMessageDto(Long userId, Integer movieCode, Integer likeCnt, MessageType type) {
+    public MovieLikeMessageDto(Long userId, Integer code, Integer value, MessageType type) {
         this.userId = userId;
-        this.movieCode = movieCode;
-        this.likeCnt = likeCnt;
+        this.code = code;
+        this.value = value;
         this.type = type;
     }
     @Override
-    public String getType() {
-        return "MOVIE_LIKE";
+    public MessageType getType() {
+        return type;
     }
 
     @Override
     public Integer getCode() {
-        return this.movieCode;
+        return this.code;
     }
 
     @Override
     public Integer getValue() {
-        return this.likeCnt;
+        return this.value;
     }
 }
