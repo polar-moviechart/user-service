@@ -1,7 +1,7 @@
 package com.polar_moviechart.userservice.event.dto;
 
 public interface MessageDto {
-    MessageType getType();
+    UserActivityType getType();
     Integer getCode();
     Object getValue();
 }
