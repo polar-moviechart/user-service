@@ -1,10 +1,17 @@
 package com.polar_moviechart.userservice.controller.secureapi.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class UpdateRatingRequest {
-    private final Double rating;
+    private Double rating;
+
+    @Builder
+    public UpdateRatingRequest(Double rating) {
+        this.rating = rating;
+    }
 }

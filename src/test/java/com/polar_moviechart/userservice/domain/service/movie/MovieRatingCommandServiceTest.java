@@ -39,7 +39,10 @@ class MovieRatingCommandServiceTest extends MovieRatingTestConfig {
         // given
         int movieCode = movieCodes.get(0);
         double ratingValue = 5.5;
-        UpdateRatingRequest updateRatingRequest = new UpdateRatingRequest(ratingValue);
+        UpdateRatingRequest updateRatingRequest =
+                UpdateRatingRequest.builder()
+                .rating(ratingValue)
+                .build();
 
         // when
         movieRatingCommandService.updateRating(movieCode, getUser(0), updateRatingRequest);
@@ -59,7 +62,10 @@ class MovieRatingCommandServiceTest extends MovieRatingTestConfig {
         Integer existingMovieCode = existingMovieRating.getCode();
 
         double newRatingValue = 2.0;
-        UpdateRatingRequest updateRatingRequest = new UpdateRatingRequest(newRatingValue);
+        UpdateRatingRequest updateRatingRequest =
+                UpdateRatingRequest.builder()
+                .rating(newRatingValue)
+                .build();
         // when
         movieRatingCommandService.updateRating(existingMovieCode, getUser(1), updateRatingRequest);
         MovieRating updatedMovieRating = movieRatingRepository
