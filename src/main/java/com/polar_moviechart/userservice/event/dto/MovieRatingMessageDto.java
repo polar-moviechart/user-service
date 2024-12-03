@@ -6,26 +6,26 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class MovieLikeMessageDto implements MessageDto {
+public class MovieRatingMessageDto {
     private Long userId;
     private Integer code;
-    private Boolean value;
+    private Double value;
     private UserActivityType type;
 
     @Builder
-    public MovieLikeMessageDto(Long userId, Integer code, Boolean value, UserActivityType type) {
+    public MovieRatingMessageDto(Long userId, Integer code, Double value, UserActivityType type) {
         this.userId = userId;
         this.code = code;
         this.value = value;
         this.type = type;
     }
 
-    public static MovieLikeMessageDto from(Long userId, Integer code, Boolean value) {
-        return MovieLikeMessageDto.builder()
+    public static MovieRatingMessageDto from(Long userId, Integer code, Double value) {
+        return MovieRatingMessageDto.builder()
                 .userId(userId)
                 .code(code)
                 .value(value)
-                .type(UserActivityType.LIKE)
+                .type(UserActivityType.RATING)
                 .build();
     }
 }
