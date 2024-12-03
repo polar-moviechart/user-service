@@ -39,7 +39,9 @@ public class MovieControllerSecure {
                                                                @RequestBody UpdateRatingRequest updateRatingRequest) {
         movieServiceHandler.validateMovieExists(code);
 
-        double ratingValue = movieCommandService.updateRating(code, getUserId(servletRequest), updateRatingRequest);
+        Long userId = getUserId(servletRequest);
+        double ratingValue = movieCommandService.updateRating(code, userId, updateRatingRequest);
+        movieEventPublisher.publishRatingEvent(userId, code, ratingValue);
 
         return ok(new CustomResponse<>(ratingValue));
     }
