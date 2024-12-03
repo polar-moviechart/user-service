@@ -1,5 +1,6 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
+import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
@@ -43,5 +44,10 @@ public class MovieQueryService {
 
     public Integer getMovieLikes(int code) {
         return movieLikeQueryService.getMovieLikes(code);
+    }
+
+    public Boolean getUserMovieLike(Long userId, Integer code) {
+        MovieLike like = movieLikeQueryService.getLike(userId, code);
+        return like.getIsLike();
     }
 }

@@ -40,7 +40,11 @@ public class MovieCommandService {
         return MovieLikeRes.from(movieLike);
     }
 
-    private User getUser(Long userId) {
+    private User getKakaoUser(Long userId) {
         return userQueryService.getKakaoUser(AuthType.KAKAO, userId);
+    }
+
+    private User getUser(Long userId) {
+        return userQueryService.getUser(userId);
     }
 }

@@ -2,19 +2,21 @@ package com.polar_moviechart.userservice.utils;
 
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.ErrorInfo;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Optional;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomResponse<T> {
     private Boolean isSuccess = true;
     private String errorMsg = null;
     private String code = null;
-    private Optional<T> data;
+    private T data;
 
     public CustomResponse(T data) {
-        this.data = Optional.ofNullable(data);
+        this.data = data;
     }
 
     public CustomResponse(ErrorCode errorCode) {

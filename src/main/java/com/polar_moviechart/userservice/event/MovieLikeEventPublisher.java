@@ -1,6 +1,6 @@
 package com.polar_moviechart.userservice.event;
 
-import com.polar_moviechart.userservice.event.dto.MessageType;
+import com.polar_moviechart.userservice.event.dto.UserActivityType;
 import com.polar_moviechart.userservice.event.dto.MovieLikeMessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +21,12 @@ public class MovieLikeEventPublisher {
 
     private final RabbitTemplate rabbitTemplate;
 
-    public void publishLikeEvent(Long userId, int movieCode, boolean isLike, MessageType like) {
+    public void publishLikeEvent(Long userId, int movieCode, boolean isLike, UserActivityType type) {
         MovieLikeMessageDto eventDto = MovieLikeMessageDto.builder()
                 .userId(userId)
-                .movieCode(movieCode)
-                .likeCnt(isLike ? 1 : -1)
-                .type(like)
+                .code(movieCode)
+                .value(isLike)
+                .type(type)
                 .build();
 
         rabbitTemplate.convertAndSend(exchangeName, routingKey, eventDto);

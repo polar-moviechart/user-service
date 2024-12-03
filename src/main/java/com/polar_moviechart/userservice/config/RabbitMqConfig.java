@@ -64,12 +64,14 @@ public class RabbitMqConfig {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         // JSON 형식의 메시지를 직렬화하고 역직렬할 수 있도록 설정
-        rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
+        rabbitTemplate.setMessageConverter(converter());
         return rabbitTemplate;
     }
 
     @Bean
-    public MessageConverter jackson2JsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+    public MessageConverter converter() {
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
+//        converter.setUseProjectionForInterfaces(true); // 메시지로 인터페이스 사용 가능
+        return converter;
     }
 }
