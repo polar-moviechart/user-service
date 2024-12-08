@@ -1,6 +1,7 @@
 package com.polar_moviechart.userservice.event;
 
 import com.polar_moviechart.userservice.config.RabbitMQProperties;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.UpdateRatingRes;
 import com.polar_moviechart.userservice.event.dto.MovieLikeMessageDto;
 import com.polar_moviechart.userservice.event.dto.MovieRatingMessageDto;
 import lombok.RequiredArgsConstructor;
@@ -14,25 +15,22 @@ import org.springframework.stereotype.Service;
 public class MovieEventPublisher {
     private final RabbitMQProperties rabbitMQProperties;
     private final RabbitTemplate rabbitTemplate;
-    private final ObjectStringConverter converter;
 
     public void publishLikeEvent(Long userId, int movieCode, boolean isLike) {
         String exchangeName = rabbitMQProperties.getExchange().get("main");
         String routingKey = rabbitMQProperties.getRoutingKeys().get("movie-like");
 
         MovieLikeMessageDto eventDto = MovieLikeMessageDto.from(userId, movieCode, isLike);
-        String message = converter.convertObjectToJsonString(eventDto);
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, eventDto);
         log.info("Like event published: {}", eventDto);
     }
 
-    public void publishRatingEvent(Long userId, int code, double ratingValue) {
+    public void publishRatingEvent(Long userId, int code, UpdateRatingRes updateRatingRes) {
         String exchangeName = rabbitMQProperties.getExchange().get("main");
         String routingKey = rabbitMQProperties.getRoutingKeys().get("movie-rating");
 
-        MovieRatingMessageDto eventDto = MovieRatingMessageDto.from(userId, code, ratingValue);
-        String message = converter.convertObjectToJsonString(eventDto);
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
+        MovieRatingMessageDto eventDto = MovieRatingMessageDto.from(userId, code, updateRatingRes);
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, eventDto);
         log.info("Rating event published: {}", eventDto);
     }
 }

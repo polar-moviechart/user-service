@@ -3,12 +3,9 @@ package com.polar_moviechart.userservice.controller.secureapi;
 import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieReviewReq;
 import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateMovieLikeReq;
 import com.polar_moviechart.userservice.controller.secureapi.dtos.UpdateRatingRequest;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.*;
 import com.polar_moviechart.userservice.handler.movie.MovieServiceHandler;
 import com.polar_moviechart.userservice.event.MovieEventPublisher;
-import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
-import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
-import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
-import com.polar_moviechart.userservice.domain.service.movie.dtos.UpdateReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.MovieCommandService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
 import com.polar_moviechart.userservice.utils.CustomResponse;
@@ -34,16 +31,16 @@ public class MovieControllerSecure {
     private final MovieServiceHandler movieServiceHandler;
 
     @PostMapping("/{code}/rating")
-    public ResponseEntity<CustomResponse<Double>> updateRating(HttpServletRequest servletRequest,
+    public ResponseEntity<CustomResponse<UpdateRatingRes>> updateRating(HttpServletRequest servletRequest,
                                                                @PathVariable(name = "code") int code,
                                                                @RequestBody UpdateRatingRequest updateRatingRequest) {
         movieServiceHandler.validateMovieExists(code);
 
         Long userId = getUserId(servletRequest);
-        double ratingValue = movieCommandService.updateRating(code, userId, updateRatingRequest);
-        movieEventPublisher.publishRatingEvent(userId, code, ratingValue);
+        UpdateRatingRes updateRatingRes = movieCommandService.updateRating(code, userId, updateRatingRequest);
+        movieEventPublisher.publishRatingEvent(userId, code, updateRatingRes);
 
-        return ok(new CustomResponse<>(ratingValue));
+        return ok(new CustomResponse<>(updateRatingRes));
     }
 
     @GetMapping("/{code}/rating")

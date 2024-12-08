@@ -21,11 +21,19 @@ public class UserControllerInternal {
         return ResponseEntity.ok(new CustomResponse(isExists));
     }
 
-    @GetMapping("/{userId}/movies/{code}/like")
+    @GetMapping("/{userId}/movies/{code}/likes")
     public ResponseEntity<CustomResponse<Boolean>> userMovieLikeExists(
             @PathVariable("userId") Long userId,
             @PathVariable("code") Integer code) {
         Boolean userMovieLike = movieQueryService.getUserMovieLike(userId, code);
         return ResponseEntity.ok(new CustomResponse(userMovieLike));
+    }
+
+    @GetMapping("/{userId}/movies/{code}/ratings")
+    public ResponseEntity<CustomResponse<Boolean>> getUserMovieRating(
+            @PathVariable("userId") Long userId,
+            @PathVariable("code") Integer code) {
+        Double userMovieRating = movieQueryService.getUserMovieRating(code, userId);
+        return ResponseEntity.ok(new CustomResponse(userMovieRating));
     }
 }
