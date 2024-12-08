@@ -28,4 +28,12 @@ public class UserControllerInternal {
         Boolean userMovieLike = movieQueryService.getUserMovieLike(userId, code);
         return ResponseEntity.ok(new CustomResponse(userMovieLike));
     }
+
+    @GetMapping("/{userId}/movies/{code}/rating")
+    public ResponseEntity<CustomResponse<Double>> getUserMovieRating(
+            @PathVariable("userId") Long userId,
+            @PathVariable("code") Integer code) {
+        Double userMovieRating = movieQueryService.getUserMovieRating(code, userId);
+        return ResponseEntity.ok(new CustomResponse(userMovieRating));
+    }
 }
