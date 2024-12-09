@@ -7,6 +7,7 @@ import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.UpdateRatingRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.UpdateReviewRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class MovieCommandService {
 
 
     @Transactional
-    public double updateRating(int code, Long userId, UpdateRatingRequest updateRatingRequest) {
+    public UpdateRatingRes updateRating(int code, Long userId, UpdateRatingRequest updateRatingRequest) {
         return movieRatingCommandService.updateRating(code, getUser(userId), updateRatingRequest);
     }
 
