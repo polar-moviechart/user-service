@@ -19,7 +19,7 @@ public class MovieRatingQueryService {
     public Double getUserMovieRating(int code, Long userId) {
         return movieRatingRepository.findByCodeAndUserId(code, userId)
                 .map(MovieRating::getRating)
-                .orElseThrow(() -> new UserBusinessException(ErrorCode.RATING_NOT_EXISTS));
+                .orElse(0.0);
     }
 
     public List<MovieRatingRes> getUserMovieRatings(Long userId, PageRequest pageable) {
