@@ -9,26 +9,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class MovieReviewCommandService {
     private final MovieReviewRepository movieReviewRepository;
 
     @Transactional
-    public UpdateReviewRes updateReview(int code, User user, UpdateMovieReviewReq req) {
-        Optional<MovieReview> existingReview = movieReviewRepository.findByUserIdAndCode(user.getId(), code);
-        MovieReview movieReview = existingReview
-                .map(review -> {
-                    review.setContent(req.getContent());
-                    return review;
-                })
-                .orElseGet(() -> MovieReview.builder()
-                        .code(code)
-                        .userId(user.getId())
-                        .content(req.getContent())
-                        .build());
+    public UpdateReviewRes addReview(int code, User user, UpdateMovieReviewReq req) {
+        MovieReview movieReview = MovieReview.builder()
+                .code(code)
+                .user(user)
+                .content(req.getContent())
+                .build();
         movieReviewRepository.save(movieReview);
         return UpdateReviewRes.builder().reviewId(movieReview.getId()).build();
     }
