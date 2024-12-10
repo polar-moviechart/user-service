@@ -79,13 +79,7 @@ public class MovieControllerSecure {
         List<MovieReviewRes> reviews = movieQueryService.getUserMovieReviews(userId, pageable);
 
         List<Integer> movieCodes = reviews.stream().map(MovieReviewRes::getCode).toList();
-        movieServiceHandler.getMoviesByCodes(movieCodes).forEach(movie -> {
-            reviews.forEach(review -> {
-                if (review.getCode() == movie.getCode()) {
-                    review.setTitle(movie.getTitle());
-                }
-            });
-        });
+        setMovieInfo(reviews, movieCodes);
 
         return ok(new CustomResponse<>(reviews));
     }
@@ -110,6 +104,16 @@ public class MovieControllerSecure {
         List<MovieRatingRes> ratings = movieQueryService
                 .getUserMovieRatings(getUserId(servletRequest), pageable);
         return ok(new CustomResponse<>(ratings));
+    }
+
+    private void setMovieInfo(List<? extends UserActionRes> actionRes, List<Integer> movieCodes) {
+        movieServiceHandler.getMoviesByCodes(movieCodes).forEach(movie -> {
+            actionRes.forEach(res -> {
+                if (res.getCode() == movie.getCode()) {
+                    res.setTitle(movie.getTitle());
+                }
+            });
+        });
     }
 
     private Long getUserId(HttpServletRequest servletRequest) {
