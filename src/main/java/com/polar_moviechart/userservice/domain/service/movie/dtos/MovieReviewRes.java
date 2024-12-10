@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class MovieReviewRes {
+public class MovieReviewRes implements UserActionRes {
     private Long id;
     private Long userId;
     private String nickname;
