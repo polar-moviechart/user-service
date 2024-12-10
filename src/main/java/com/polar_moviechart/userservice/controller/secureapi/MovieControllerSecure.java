@@ -77,6 +77,16 @@ public class MovieControllerSecure {
         Long userId = getUserId(servletRequest);
         PageRequest pageable = PageRequest.of(page, size);
         List<MovieReviewRes> reviews = movieQueryService.getUserMovieReviews(userId, pageable);
+
+        List<Integer> movieCodes = reviews.stream().map(MovieReviewRes::getCode).toList();
+        movieServiceHandler.getMoviesByCodes(movieCodes).forEach(movie -> {
+            reviews.forEach(review -> {
+                if (review.getCode() == movie.getCode()) {
+                    review.setTitle(movie.getTitle());
+                }
+            });
+        });
+
         return ok(new CustomResponse<>(reviews));
     }
 

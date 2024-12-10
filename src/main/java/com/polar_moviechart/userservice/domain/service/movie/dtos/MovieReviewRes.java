@@ -10,14 +10,17 @@ import java.util.stream.Collectors;
 
 @Getter
 public class MovieReviewRes {
+    private Long id;
     private Long userId;
     private String nickname;
     private Integer code;
+    private String title;
     private String content;
     private LocalDateTime createdAt;
 
     @Builder
-    public MovieReviewRes(Long userId, String nickname, Integer code, String content, LocalDateTime createdAt) {
+    public MovieReviewRes(Long id, Long userId, String nickname, Integer code, String content, LocalDateTime createdAt) {
+        this.id = id;
         this.userId = userId;
         this.nickname = nickname;
         this.code = code;
@@ -27,6 +30,7 @@ public class MovieReviewRes {
 
     private static MovieReviewRes from(MovieReview movieReview) {
         return MovieReviewRes.builder()
+                .id(movieReview.getId())
                 .userId(movieReview.getUserId())
                 .nickname(movieReview.getNickname())
                 .code(movieReview.getCode())
@@ -39,5 +43,9 @@ public class MovieReviewRes {
         return movieReviews.stream()
                 .map(MovieReviewRes::from)
                 .collect(Collectors.toList());
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
