@@ -43,36 +43,16 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(updateRatingRes));
     }
 
-    @GetMapping("/{code}/rating")
-    public ResponseEntity<CustomResponse<Double>> getMovieRating(HttpServletRequest request,
-                                                                 @PathVariable(name = "code") int code) {
-        Long userId = (Long) request.getAttribute("userId");
-        movieServiceHandler.validateMovieExists(code);
-        Double movieRating = movieQueryService.getUserMovieRating(code, userId);
-
-        return ok(new CustomResponse<>(movieRating));
-    }
-
     @PostMapping("/{code}/reviews")
-    public ResponseEntity<CustomResponse<UpdateReviewRes>> updateReview(
+    public ResponseEntity<CustomResponse<UpdateReviewRes>> addReview(
             HttpServletRequest servletRequest,
             @PathVariable("code") int code,
             @Valid @RequestBody UpdateMovieReviewReq req) {
         movieServiceHandler.validateMovieExists(code);
 
-        UpdateReviewRes updateReviewRes = movieCommandService.updateReview(code, getUserId(servletRequest), req);
+        UpdateReviewRes updateReviewRes = movieCommandService.addReview(code, getUserId(servletRequest), req);
 
         return ok(new CustomResponse<>(updateReviewRes));
-    }
-
-    @GetMapping("/{code}/reviews")
-    public ResponseEntity<CustomResponse<MovieReviewRes>> getReview(
-            HttpServletRequest servletRequest,
-            @PathVariable("code") int code) {
-
-        MovieReviewRes res = movieQueryService.getReview(getUserId(servletRequest), code);
-
-        return ok(new CustomResponse<>(res));
     }
 
     @PostMapping("/{code}/likes")
@@ -86,15 +66,6 @@ public class MovieControllerSecure {
         MovieLikeRes movieLikeRes = movieCommandService.updateLike(getUserId(servletRequest), code, req);
 
         movieEventPublisher.publishLikeEvent(userId, code, req.getIsLike());
-        return ok(new CustomResponse<>(movieLikeRes));
-    }
-
-    @GetMapping("/{code}/likes")
-    public ResponseEntity<CustomResponse<MovieLikeRes>> getLike(
-            HttpServletRequest servletRequest,
-            @PathVariable("code") int code) {
-        MovieLikeRes movieLikeRes = movieQueryService.getLike(getUserId(servletRequest), code);
-
         return ok(new CustomResponse<>(movieLikeRes));
     }
 
@@ -120,7 +91,7 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(likes));
     }
 
-    @GetMapping
+    @GetMapping("/ratings")
     public ResponseEntity<CustomResponse<List<MovieRatingRes>>> getUserMovieRatings(
             HttpServletRequest servletRequest,
             @RequestParam(defaultValue = "0") int page,
