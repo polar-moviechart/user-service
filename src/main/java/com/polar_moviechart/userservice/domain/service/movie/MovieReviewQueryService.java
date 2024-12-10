@@ -10,23 +10,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MovieReviewQueryService {
     private final MovieReviewRepository movieReviewRepository;
 
-    public MovieReviewRes getReview(Long userId, int code) {
-        Optional<MovieReview> reviewOptional = movieReviewRepository
-                .findByUserIdAndCode(userId, code);
-        MovieReview movieReview = reviewOptional.orElseThrow(() ->
-                new UserBusinessException(ErrorCode.REVIEW_NOT_EXISTS));
-        return movieReview.toDto();
+    public List<MovieReviewRes> getReviews(Long userId, int code, PageRequest pageRequest) {
+        List<MovieReview> movieReviews = movieReviewRepository.findByCodeOrderByCreatedAtDesc(code, pageRequest);
+        return MovieReviewRes.listFrom(movieReviews);
     }
 
     public List<MovieReviewRes> getUserMovieReviews(Long userId, PageRequest pageable) {
-        List<MovieReview> movieReviews = movieReviewRepository.findByUserId(userId, pageable);
+        List<MovieReview> movieReviews = movieReviewRepository.findByUser_Id(userId, pageable);
         if (movieReviews.isEmpty()) {
             throw new UserBusinessException(ErrorCode.REVIEW_NOT_EXISTS);
         }

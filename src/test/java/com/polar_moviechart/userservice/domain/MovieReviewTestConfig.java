@@ -26,7 +26,7 @@ public abstract class MovieReviewTestConfig extends UserTestConfig {
                     MovieReview movieReview = MovieReview.builder()
                             .code(movieCode)
                             .content("review" + i)
-                            .userId(user.getId())
+                            .user(user)
                             .build();
                     movieReviewRepository.save(movieReview);
                 }

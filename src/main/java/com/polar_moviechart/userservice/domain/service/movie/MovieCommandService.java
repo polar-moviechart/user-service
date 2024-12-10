@@ -30,8 +30,8 @@ public class MovieCommandService {
     }
 
     @Transactional
-    public UpdateReviewRes updateReview(int code, Long userId, UpdateMovieReviewReq req) {
-        return movieReviewCommandService.updateReview(code, getUser(userId), req);
+    public UpdateReviewRes addReview(int code, Long userId, UpdateMovieReviewReq req) {
+        return movieReviewCommandService.addReview(code, getUser(userId), req);
     }
 
     @Transactional

@@ -22,8 +22,8 @@ public class MovieQueryService {
         return movieRatingQueryService.getUserMovieRating(code, userId);
     }
 
-    public MovieReviewRes getReview(Long userId, int code) {
-        return movieReviewQueryService.getReview(userId, code);
+    public List<MovieReviewRes> getReviews(Long userId, int code, PageRequest pageRequest) {
+        return movieReviewQueryService.getReviews(userId, code, pageRequest);
     }
 
     public MovieLikeRes getLike(Long userId, int code) {

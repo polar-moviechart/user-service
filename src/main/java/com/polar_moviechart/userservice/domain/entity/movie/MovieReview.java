@@ -1,6 +1,6 @@
 package com.polar_moviechart.userservice.domain.entity.movie;
 
-import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
+import com.polar_moviechart.userservice.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,8 +23,9 @@ public class MovieReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private Integer code;
@@ -39,22 +40,21 @@ public class MovieReview {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public MovieReview(Long userId, Integer code, String content) {
-        this.userId = userId;
+    public MovieReview(User user, Integer code, String content) {
+        this.user = user;
         this.code = code;
         this.content = content;
     }
 
-    public MovieReviewRes toDto() {
-        return MovieReviewRes.builder()
-                .userId(userId)
-                .code(this.code)
-                .content(content)
-                .createdAt(createdAt)
-                .build();
-    }
-
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Long getUserId() {
+        return user.getId();
+    }
+
+    public String getNickname() {
+        return user.getNickname();
     }
 }

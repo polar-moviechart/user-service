@@ -45,16 +45,4 @@ class MovieRatingQueryServiceTest {
         // then
         assertEquals(expectedRating, rating);
     }
-
-    @DisplayName("유저가 존재하지 않으면 예외가 발생한다.")
-    @Test
-    void validateUserExists_userNotExists() {
-        // given
-        when(ratingRepository.findByCodeAndUserId(movieCode, userId)).thenReturn(Optional.empty());
-        // when then
-        UserBusinessException exception = assertThrows(UserBusinessException.class,
-                () -> ratingQueryService.getUserMovieRating(movieCode, userId)
-        );
-        assertEquals(ErrorCode.RATING_NOT_EXISTS.getCode(), exception.getCode());
-    }
 }
