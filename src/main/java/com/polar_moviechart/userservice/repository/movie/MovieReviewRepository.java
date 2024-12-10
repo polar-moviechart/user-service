@@ -10,7 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface MovieReviewRepository extends JpaRepository<MovieReview, Long> {
-    List<MovieReview> findByUserId(Long userId, PageRequest pageable);
+    List<MovieReview> findByUser_Id(Long userId, PageRequest pageable);
 
-    Optional<MovieReview> findByUserIdAndCode(Long userId, int code);
+    Optional<MovieReview> findByUser_IdAndCode(Long userId, int code);
+
+    List<MovieReview> findByCodeOrderByCreatedAtDesc(int code, PageRequest pageRequest);
 }
