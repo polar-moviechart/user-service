@@ -1,6 +1,8 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
+import com.polar_moviechart.userservice.controller.internalapi.dtos.UserMoviesLikeReq;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikesRes;
 import com.polar_moviechart.userservice.repository.movie.MovieLikeRepository;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import com.polar_moviechart.userservice.exception.ErrorCode;
@@ -37,5 +39,10 @@ public class MovieLikeQueryService {
 
     public Integer getMovieLikes(int code) {
         return movieLikeRepository.countByCode(code);
+    }
+
+    public List<MovieLikesRes> getUserMoviesLike(UserMoviesLikeReq userMoviesLikeReq) {
+        List<MovieLike> movieLikes = movieLikeRepository.findByUserIdAndCodeIn(userMoviesLikeReq.getUserId(), userMoviesLikeReq.getMovieCodes());
+        return MovieLikesRes.listFrom(movieLikes);
     }
 }
