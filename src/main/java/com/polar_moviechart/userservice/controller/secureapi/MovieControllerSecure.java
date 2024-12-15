@@ -62,7 +62,6 @@ public class MovieControllerSecure {
             @RequestBody UpdateMovieLikeReq req) {
         Long userId = getUserId(servletRequest);
         movieServiceHandler.validateMovieExists(code);
-
         MovieLikeRes movieLikeRes = movieCommandService.updateLike(getUserId(servletRequest), code, req);
 
         movieEventPublisher.publishLikeEvent(userId, code, req.getIsLike());
@@ -92,6 +91,10 @@ public class MovieControllerSecure {
         Long userId = getUserId(servletRequest);
         PageRequest pageable = PageRequest.of(page, size);
         List<MovieLikeRes> likes = movieQueryService.getUserMovieLikes(userId, pageable);
+
+        List<Integer> movieCodes = likes.stream().map(MovieLikeRes::getCode).toList();
+        setMovieInfo(likes, movieCodes);
+
         return ok(new CustomResponse<>(likes));
     }
 

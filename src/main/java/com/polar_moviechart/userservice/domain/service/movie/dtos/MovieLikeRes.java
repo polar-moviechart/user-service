@@ -7,8 +7,9 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class MovieLikeRes {
+public class MovieLikeRes implements UserActionRes {
     private Long userId;
+    private String title;
     private Integer code;
     private Boolean isLike;
 
@@ -31,5 +32,9 @@ public class MovieLikeRes {
         return movieLikes.stream()
                 .map(MovieLikeRes::from)
                 .toList();
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
