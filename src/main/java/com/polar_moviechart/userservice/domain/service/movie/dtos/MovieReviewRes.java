@@ -3,13 +3,15 @@ package com.polar_moviechart.userservice.domain.service.movie.dtos;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieReview;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class MovieReviewRes {
+@ToString
+public class MovieReviewRes implements UserActionRes {
     private Long id;
     private Long userId;
     private String nickname;
@@ -28,7 +30,7 @@ public class MovieReviewRes {
         this.createdAt = createdAt;
     }
 
-    private static MovieReviewRes from(MovieReview movieReview) {
+    public static MovieReviewRes from(MovieReview movieReview) {
         return MovieReviewRes.builder()
                 .id(movieReview.getId())
                 .userId(movieReview.getUserId())
@@ -40,6 +42,9 @@ public class MovieReviewRes {
     }
 
     public static List<MovieReviewRes> listFrom(List<MovieReview> movieReviews) {
+        if (movieReviews.isEmpty()) {
+            return null;
+        }
         return movieReviews.stream()
                 .map(MovieReviewRes::from)
                 .collect(Collectors.toList());

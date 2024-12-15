@@ -15,4 +15,8 @@ public interface MovieLikeRepository extends JpaRepository<MovieLike, Long> {
     List<MovieLike> findByUserId(Long userId, PageRequest pageable);
 
     Integer countByCode(int code);
+
+    List<MovieLike> findByUserIdAndCodeIn(Long userId, List<Integer> movieCodes);
+
+    List<MovieLike> findByUserIdAndLikeStatus(Long userId, boolean isLike, PageRequest pageable);
 }

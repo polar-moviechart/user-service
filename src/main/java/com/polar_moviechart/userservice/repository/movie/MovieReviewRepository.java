@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface MovieReviewRepository extends JpaRepository<MovieReview, Long> {
     List<MovieReview> findByUser_Id(Long userId, PageRequest pageable);
 
-    Optional<MovieReview> findByUser_IdAndCode(Long userId, int code);
+    List<MovieReview> findByUser_IdAndCode(Long userId, int code);
 
     List<MovieReview> findByCodeOrderByCreatedAtDesc(int code, PageRequest pageRequest);
 }

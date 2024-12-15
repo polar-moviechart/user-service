@@ -1,5 +1,6 @@
 package com.polar_moviechart.userservice.domain.service;
 
+import com.polar_moviechart.userservice.domain.dtos.UserActivityInfo;
 import com.polar_moviechart.userservice.domain.entity.AuthType;
 import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.repository.UserRepository;

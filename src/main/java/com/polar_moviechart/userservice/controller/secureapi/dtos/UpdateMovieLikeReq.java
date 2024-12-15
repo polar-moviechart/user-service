@@ -22,7 +22,7 @@ public class UpdateMovieLikeReq {
         return MovieLike.builder()
                 .code(code)
                 .userId(user.getId())
-                .isLike(isLike)
+                .likeStatus(isLike)
                 .build();
     }
 }

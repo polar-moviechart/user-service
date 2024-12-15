@@ -19,10 +19,10 @@ public class MovieLikeCommandService {
                 .orElseGet(() -> MovieLike.builder()
                         .userId(user.getId())
                         .code(code)
-                        .isLike(req.getIsLike())
+                        .likeStatus(req.getIsLike())
                         .build());
 
-        movieLike.setIsLike(req.getIsLike());
+        movieLike.setLikeStatus(req.getIsLike());
         return movieLikeRepository.save(movieLike);
     }
 }
