@@ -1,9 +1,10 @@
 package com.polar_moviechart.userservice.controller.internalapi;
 
 import com.polar_moviechart.userservice.controller.internalapi.dtos.UserMoviesLikeReq;
+import com.polar_moviechart.userservice.domain.dtos.Category;
+import com.polar_moviechart.userservice.domain.dtos.UserActivityInfo;
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
-import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikesRes;
 import com.polar_moviechart.userservice.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;
@@ -39,10 +40,12 @@ public class UserControllerInternal {
 
     @PostMapping("/movies/likes")
     public ResponseEntity<List<MovieLikesRes>> getUserMoviesLike(
-            @RequestBody UserMoviesLikeReq userMoviesLikeReq
-    ) {
-        List<MovieLikesRes> userMoviesLike = movieQueryService.getUserMoviesLike(userMoviesLikeReq);
-        log.info("userMoviesLike: {}", userMoviesLike);
+            @RequestBody UserMoviesLikeReq userMoviesLikeReq,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        List<MovieLikesRes> userMoviesLike = movieQueryService.getUserMoviesLike(userMoviesLikeReq, pageable);
+
         return ResponseEntity.ok(userMoviesLike);
     }
 
@@ -52,5 +55,19 @@ public class UserControllerInternal {
             @PathVariable("code") Integer code) {
         Double userMovieRating = movieQueryService.getUserMovieRating(code, userId);
         return ResponseEntity.ok(new CustomResponse(userMovieRating));
+    }
+
+    @GetMapping("/{category}/{userId}/activities/{code}")
+    public ResponseEntity<CustomResponse<UserActivityInfo>> getUserActivity(
+            @PathVariable("category") Category category,
+            @PathVariable("userId") Long userId,
+            @PathVariable("code") Integer code) {
+        userQueryService.getUser(userId);
+        if (category == Category.MOVIE) {
+            UserActivityInfo userMovieActivity = movieQueryService.getUserMovieActivity(userId, code);
+            return ResponseEntity.ok(new CustomResponse(userMovieActivity));
+        } else {
+            throw new IllegalArgumentException("준비중 입니다.");
+        }
     }
 }

@@ -10,4 +10,8 @@ import java.util.List;
 public class UserMoviesLikeReq {
     private Long userId;
     private List<Integer> movieCodes;
+
+    public boolean isMovieCodesEmpty() {
+        return movieCodes == null;
+    }
 }

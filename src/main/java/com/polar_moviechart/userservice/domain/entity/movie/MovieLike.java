@@ -27,8 +27,8 @@ public class MovieLike {
     @Column(name = "code", nullable = false)
     private Integer code;
 
-    @Column(name = "isLike", nullable = false)
-    private Boolean isLike;
+    @Column(name = "is_like", nullable = false)
+    private Boolean likeStatus;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -37,13 +37,13 @@ public class MovieLike {
     private LocalDateTime updatedAt;
 
     @Builder
-    public MovieLike(Long userId, Integer code, Boolean isLike) {
+    public MovieLike(Long userId, Integer code, Boolean likeStatus) {
         this.userId = userId;
         this.code = code;
-        this.isLike = isLike;
+        this.likeStatus = likeStatus;
     }
 
-    public void setIsLike(Boolean isLike) {
-        this.isLike = isLike;
+    public void setLikeStatus(Boolean likeStatus) {
+        this.likeStatus = likeStatus;
     }
 }

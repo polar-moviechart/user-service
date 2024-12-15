@@ -1,7 +1,10 @@
 package com.polar_moviechart.userservice.domain.service.movie;
 
 import com.polar_moviechart.userservice.controller.internalapi.dtos.UserMoviesLikeReq;
+import com.polar_moviechart.userservice.domain.dtos.UserActivityInfo;
+import com.polar_moviechart.userservice.domain.entity.User;
 import com.polar_moviechart.userservice.domain.entity.movie.MovieLike;
+import com.polar_moviechart.userservice.domain.service.UserQueryService;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikesRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieReviewRes;
@@ -50,10 +53,16 @@ public class MovieQueryService {
 
     public Boolean getUserMovieLike(Long userId, Integer code) {
         MovieLike like = movieLikeQueryService.getLike(userId, code);
-        return like.getIsLike();
+        return like.getLikeStatus();
     }
 
-    public List<MovieLikesRes> getUserMoviesLike(UserMoviesLikeReq userMoviesLikeReq) {
-        return movieLikeQueryService.getUserMoviesLike(userMoviesLikeReq);
+    public List<MovieLikesRes> getUserMoviesLike(UserMoviesLikeReq userMoviesLikeReq, PageRequest pageable) {
+        return movieLikeQueryService.getUserMoviesLike(userMoviesLikeReq, pageable);
+    }
+
+    public UserActivityInfo getUserMovieActivity(Long userId, Integer code) {
+        Boolean userMovieLike = movieLikeQueryService.getUserMovieLike(userId, code);
+        Double userMovieRating = movieRatingQueryService.getUserMovieRating(code, userId);
+        return new UserActivityInfo(userMovieLike, userMovieRating);
     }
 }

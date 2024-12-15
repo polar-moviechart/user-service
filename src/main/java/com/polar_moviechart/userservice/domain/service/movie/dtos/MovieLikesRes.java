@@ -27,10 +27,10 @@ public class MovieLikesRes {
                 .toList();
     }
 
-    private static MovieLikesRes from(MovieLike movieLike) {
+    public static MovieLikesRes from(MovieLike movieLike) {
         return MovieLikesRes.builder()
                 .movieCode(movieLike.getCode())
-                .likeStatus(movieLike.getIsLike())
+                .likeStatus(movieLike.getLikeStatus())
                 .build();
     }
 }

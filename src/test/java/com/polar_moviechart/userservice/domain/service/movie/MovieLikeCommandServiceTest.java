@@ -32,7 +32,7 @@ class MovieLikeCommandServiceTest extends UserTestConfig {
                 .isLike(true).build();
         MovieLike movieLike = movieLikeCommandService.updateLike(movieCode, user, req);
         // then
-        assertThat(movieLike.getIsLike()).isTrue();
+        assertThat(movieLike.getLikeStatus()).isTrue();
     }
 
     @DisplayName("영화 좋아요 데이터가 있는 경우 업데이트를 할 수 있다.")
@@ -48,6 +48,6 @@ class MovieLikeCommandServiceTest extends UserTestConfig {
                 .isLike(false).build();
         MovieLike movieLike = movieLikeCommandService.updateLike(movieCode, user, secondReq);
         // then
-        assertThat(movieLike.getIsLike()).isFalse();
+        assertThat(movieLike.getLikeStatus()).isFalse();
     }
 }

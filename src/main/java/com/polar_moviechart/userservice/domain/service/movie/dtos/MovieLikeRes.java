@@ -24,7 +24,7 @@ public class MovieLikeRes implements UserActionRes {
         return MovieLikeRes.builder()
                 .userId(movieLike.getUserId())
                 .code(movieLike.getCode())
-                .isLike(movieLike.getIsLike())
+                .isLike(movieLike.getLikeStatus())
                 .build();
     }
 
