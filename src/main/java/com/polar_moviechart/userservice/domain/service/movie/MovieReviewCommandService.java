@@ -22,6 +22,6 @@ public class MovieReviewCommandService {
                 .content(req.getContent())
                 .build();
         movieReviewRepository.save(movieReview);
-        return UpdateReviewRes.builder().reviewId(movieReview.getId()).build();
+        return UpdateReviewRes.from(movieReview);
     }
 }
