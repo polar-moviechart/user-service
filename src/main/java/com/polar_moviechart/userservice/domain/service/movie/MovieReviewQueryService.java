@@ -6,6 +6,8 @@ import com.polar_moviechart.userservice.repository.movie.MovieReviewRepository;
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.UserBusinessException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +20,11 @@ import java.util.Optional;
 public class MovieReviewQueryService {
     private final MovieReviewRepository movieReviewRepository;
 
-    public List<MovieReviewRes> getReviews(Long userId, int code, PageRequest pageRequest) {
-        List<MovieReview> movieReviews = movieReviewRepository.findByCodeOrderByCreatedAtDesc(code, pageRequest);
-        return MovieReviewRes.listFrom(movieReviews);
+    public Page<MovieReviewRes> getReviews(Long userId, int code, PageRequest pageRequest) {
+        Page<MovieReview> movieReviews = movieReviewRepository.findByCodeOrderByCreatedAtDesc(code, pageRequest);
+        List<MovieReviewRes> movieReviewRes = MovieReviewRes.listFrom(movieReviews.getContent());
+
+        return new PageImpl<>(movieReviewRes, pageRequest, movieReviews.getTotalElements());
     }
 
     public List<MovieReviewRes> getUserMovieReviews(Long userId, PageRequest pageable) {
