@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface MovieReviewRepository extends JpaRepository<MovieReview, Long> {
-    List<MovieReview> findByUser_Id(Long userId, PageRequest pageable);
+    Page<MovieReview> findByUser_IdOrderByCreatedAtDesc(Long userId, PageRequest pageable);
 
     List<MovieReview> findByUser_IdAndCode(Long userId, int code);
 

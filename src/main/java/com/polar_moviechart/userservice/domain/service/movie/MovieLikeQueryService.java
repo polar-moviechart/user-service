@@ -8,6 +8,8 @@ import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikeRes;
 import com.polar_moviechart.userservice.exception.ErrorCode;
 import com.polar_moviechart.userservice.exception.UserBusinessException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +35,11 @@ public class MovieLikeQueryService {
                 .orElseThrow(() -> new UserBusinessException(ErrorCode.LIKE_NOT_EXIST));
     }
 
-    public List<MovieLikeRes> getUserMovieLikes(Long userId, PageRequest pageable) {
-        List<MovieLike> movieLikes = movieLikeRepository.findByUserId(userId, pageable);
-        return MovieLikeRes.listFrom(movieLikes);
+    public Page<MovieLikeRes> getUserMovieLikes(Long userId, PageRequest pageable) {
+        Page<MovieLike> movieLikes = movieLikeRepository.findByUserId(userId, pageable);
+        List<MovieLikeRes> movieLikeRes = MovieLikeRes.listFrom(movieLikes.getContent());
+
+        return new PageImpl<>(movieLikeRes, pageable, movieLikes.getTotalElements());
     }
 
     public Integer getMovieLikes(int code) {

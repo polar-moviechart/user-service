@@ -36,11 +36,11 @@ public class MovieQueryService {
         return movieLikeQueryService.getLikeRes(userId, code);
     }
 
-    public List<MovieReviewRes> getUserMovieReviews(Long userId, PageRequest pageable) {
+    public Page<MovieReviewRes> getUserMovieReviews(Long userId, PageRequest pageable) {
         return movieReviewQueryService.getUserMovieReviews(userId, pageable);
     }
 
-    public List<MovieLikeRes> getUserMovieLikes(Long userId, PageRequest pageable) {
+    public Page<MovieLikeRes> getUserMovieLikes(Long userId, PageRequest pageable) {
         return movieLikeQueryService.getUserMovieLikes(userId, pageable);
     }
 

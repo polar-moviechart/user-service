@@ -28,7 +28,7 @@ class MovieReviewRepositoryTest extends MovieReviewTestConfig {
     void findByUserId() {
         // given // when
         PageRequest pageable = PageRequest.of(0, 10);
-        List<MovieReview> movieReview = movieReviewRepository.findByUser_Id(user.getId(), pageable);
+        List<MovieReview> movieReview = movieReviewRepository.findByUser_IdOrderByCreatedAtDesc(user.getId(), pageable).getContent();
         // then
         assertThat(movieReview.size()).isNotNull();
     }

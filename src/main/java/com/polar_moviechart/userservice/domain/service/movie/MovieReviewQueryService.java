@@ -11,9 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,12 +25,13 @@ public class MovieReviewQueryService {
         return new PageImpl<>(movieReviewRes, pageRequest, movieReviews.getTotalElements());
     }
 
-    public List<MovieReviewRes> getUserMovieReviews(Long userId, PageRequest pageable) {
-        List<MovieReview> movieReviews = movieReviewRepository.findByUser_Id(userId, pageable);
+    public Page<MovieReviewRes> getUserMovieReviews(Long userId, PageRequest pageable) {
+        Page<MovieReview> movieReviews = movieReviewRepository.findByUser_IdOrderByCreatedAtDesc(userId, pageable);
         if (movieReviews.isEmpty()) {
             throw new UserBusinessException(ErrorCode.REVIEW_NOT_EXISTS);
         }
-        return MovieReviewRes.listFrom(movieReviews);
+        List<MovieReviewRes> movieReviewRes = MovieReviewRes.listFrom(movieReviews.getContent());
+        return new PageImpl<>(movieReviewRes, pageable, movieReviews.getTotalElements());
     }
 
     public List<MovieReviewRes> getUserMovieReview(Long userId, Integer code) {
