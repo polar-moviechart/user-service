@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,8 +54,10 @@ public class MovieLikeQueryService {
     }
 
     public Boolean getUserMovieLike(Long userId, Integer code) {
-        MovieLike like = movieLikeRepository.findByUserIdAndCode(userId, code)
-                .orElseThrow(() -> new UserBusinessException(ErrorCode.LIKE_NOT_EXIST));
-        return like.getLikeStatus();
+        Optional<MovieLike> likeOptional = movieLikeRepository.findByUserIdAndCode(userId, code);
+        if (likeOptional.isEmpty()) {
+            return false;
+        }
+        return likeOptional.get().getLikeStatus();
     }
 }
