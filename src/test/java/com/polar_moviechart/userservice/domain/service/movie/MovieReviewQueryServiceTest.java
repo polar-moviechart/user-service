@@ -28,7 +28,7 @@ class MovieReviewQueryServiceTest extends MovieReviewTestConfig {
     void getUserMovieReviews_successCase() {
         // given // when
         PageRequest pageable = PageRequest.of(0, 10);
-        List<MovieReviewRes> userMovieReviews = movieReviewQueryService.getUserMovieReviews(getUserId(0), pageable);
+        List<MovieReviewRes> userMovieReviews = movieReviewQueryService.getUserMovieReviews(getUserId(0), pageable).getContent();
         // then
         assertEquals(reviewCnt, userMovieReviews.size());
     }

@@ -12,6 +12,7 @@ import com.polar_moviechart.userservice.utils.CustomResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,31 +70,29 @@ public class MovieControllerSecure {
     }
 
     @GetMapping("/reviews")
-    public ResponseEntity<CustomResponse<List<MovieReviewRes>>> getUserMovieReviews(
+    public ResponseEntity<CustomResponse<Page<MovieReviewRes>>> getUserMovieReviews(
             HttpServletRequest servletRequest,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Long userId = getUserId(servletRequest);
         PageRequest pageable = PageRequest.of(page, size);
-        List<MovieReviewRes> reviews = movieQueryService.getUserMovieReviews(userId, pageable);
 
-        List<Integer> movieCodes = reviews.stream().map(MovieReviewRes::getCode).toList();
-        setMovieInfo(reviews, movieCodes);
+        Page<MovieReviewRes> reviews = movieQueryService.getUserMovieReviews(userId, pageable);
+        setMovieInfo(reviews);
 
         return ok(new CustomResponse<>(reviews));
     }
 
     @GetMapping("/likes")
-    public ResponseEntity<CustomResponse<List<MovieLikeRes>>> getUserMovieLikes(
+    public ResponseEntity<CustomResponse<Page<MovieLikeRes>>> getUserMovieLikes(
             HttpServletRequest servletRequest,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Long userId = getUserId(servletRequest);
         PageRequest pageable = PageRequest.of(page, size);
-        List<MovieLikeRes> likes = movieQueryService.getUserMovieLikes(userId, pageable);
 
-        List<Integer> movieCodes = likes.stream().map(MovieLikeRes::getCode).toList();
-        setMovieInfo(likes, movieCodes);
+        Page<MovieLikeRes> likes = movieQueryService.getUserMovieLikes(userId, pageable);
+        setMovieInfo(likes);
 
         return ok(new CustomResponse<>(likes));
     }
@@ -109,7 +108,9 @@ public class MovieControllerSecure {
         return ok(new CustomResponse<>(ratings));
     }
 
-    private void setMovieInfo(List<? extends UserActionRes> actionRes, List<Integer> movieCodes) {
+    private void setMovieInfo(Page<? extends UserActionRes> actionRes) {
+        List<Integer> movieCodes = actionRes.stream().map(UserActionRes::getCode).toList();
+
         movieServiceHandler.getMoviesByCodes(movieCodes).forEach(movie -> {
             actionRes.forEach(res -> {
                 if (res.getCode() == movie.getCode()) {

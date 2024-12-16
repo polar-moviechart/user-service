@@ -56,6 +56,6 @@ class MovieLikeQueryServiceTest extends UserTestConfig {
         }
         // then
         PageRequest pageable = PageRequest.of(0, 10);
-        assertEquals(2, movieLikeQueryService.getUserMovieLikes(user.getId(), pageable).size());
+        assertEquals(2, movieLikeQueryService.getUserMovieLikes(user.getId(), pageable).getContent().size());
     }
 }
