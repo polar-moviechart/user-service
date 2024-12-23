@@ -57,8 +57,12 @@ public class MovieQueryService {
         return like.getLikeStatus();
     }
 
-    public List<MovieLikesRes> getUserMoviesLike(UserMoviesLikeReq userMoviesLikeReq, PageRequest pageable) {
+    public Page<MovieLikesRes> getUserMoviesLike(UserMoviesLikeReq userMoviesLikeReq, PageRequest pageable) {
         return movieLikeQueryService.getUserMoviesLike(userMoviesLikeReq, pageable);
+    }
+
+    public Page<MovieRatingRes> getUserMoviesRating(UserMoviesLikeReq userMoviesLikeReq, PageRequest pageable) {
+        return movieRatingQueryService.getUserMoviesRating(userMoviesLikeReq, pageable);
     }
 
     public UserActivityInfo getUserMovieActivity(Long userId, Integer code) {

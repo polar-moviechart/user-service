@@ -6,14 +6,14 @@ import com.polar_moviechart.userservice.domain.dtos.UserActivityInfo;
 import com.polar_moviechart.userservice.domain.service.UserQueryService;
 import com.polar_moviechart.userservice.domain.service.movie.MovieQueryService;
 import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieLikesRes;
+import com.polar_moviechart.userservice.domain.service.movie.dtos.MovieRatingRes;
 import com.polar_moviechart.userservice.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -39,14 +39,25 @@ public class UserControllerInternal {
     }
 
     @PostMapping("/movies/likes")
-    public ResponseEntity<List<MovieLikesRes>> getUserMoviesLike(
+    public ResponseEntity<Page<MovieLikesRes>> getUserMoviesLike(
             @RequestBody UserMoviesLikeReq userMoviesLikeReq,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         PageRequest pageable = PageRequest.of(page, size);
-        List<MovieLikesRes> userMoviesLike = movieQueryService.getUserMoviesLike(userMoviesLikeReq, pageable);
+        Page<MovieLikesRes> userMoviesLike = movieQueryService.getUserMoviesLike(userMoviesLikeReq, pageable);
 
         return ResponseEntity.ok(userMoviesLike);
+    }
+
+    @PostMapping("/movies/ratings")
+    public ResponseEntity<Page<MovieRatingRes>> getUserMovieRating(
+            @RequestBody UserMoviesLikeReq userMoviesLikeReq,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        Page<MovieRatingRes> userMoviesRating = movieQueryService.getUserMoviesRating(userMoviesLikeReq, pageable);
+
+        return ResponseEntity.ok(userMoviesRating);
     }
 
     @GetMapping("/{userId}/movies/{code}/ratings")

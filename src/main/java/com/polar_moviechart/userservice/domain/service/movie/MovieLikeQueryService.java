@@ -46,14 +46,15 @@ public class MovieLikeQueryService {
         return movieLikeRepository.countByCode(code);
     }
 
-    public List<MovieLikesRes> getUserMoviesLike(UserMoviesLikeReq userMoviesLikeReq, PageRequest pageable) {
+    public Page<MovieLikesRes> getUserMoviesLike(UserMoviesLikeReq userMoviesLikeReq, PageRequest pageable) {
         if (userMoviesLikeReq.isMovieCodesEmpty()) {
-            return movieLikeRepository.findByUserIdAndLikeStatus(userMoviesLikeReq.getUserId(), true, pageable).stream()
-                    .map(MovieLikesRes::from)
-                    .toList();
+            Page<MovieLike> movieLikes = movieLikeRepository.findByUserIdAndLikeStatus(userMoviesLikeReq.getUserId(), true, pageable);
+            List<MovieLikesRes> movieLikeRes = MovieLikesRes.listFrom(movieLikes.getContent());
+            return new PageImpl<>(movieLikeRes, pageable, movieLikes.getTotalElements());
         } else {
-            List<MovieLike> movieLikes = movieLikeRepository.findByUserIdAndCodeIn(userMoviesLikeReq.getUserId(), userMoviesLikeReq.getMovieCodes());
-            return MovieLikesRes.listFrom(movieLikes);
+            Page<MovieLike> movieLikes = movieLikeRepository.findByUserIdAndCodeIn(userMoviesLikeReq.getUserId(), userMoviesLikeReq.getMovieCodes(), pageable);
+            List<MovieLikesRes> movieLikeRes = MovieLikesRes.listFrom(movieLikes.getContent());
+            return new PageImpl<>(movieLikeRes, pageable, movieLikes.getTotalElements());
         }
     }
 
