@@ -61,6 +61,10 @@ public class MovieQueryService {
         return movieLikeQueryService.getUserMoviesLike(userMoviesLikeReq, pageable);
     }
 
+    public Page<MovieRatingRes> getUserMoviesRating(UserMoviesLikeReq userMoviesLikeReq, PageRequest pageable) {
+        return movieRatingQueryService.getUserMoviesRating(userMoviesLikeReq, pageable);
+    }
+
     public UserActivityInfo getUserMovieActivity(Long userId, Integer code) {
         Boolean userMovieLike = movieLikeQueryService.getUserMovieLike(userId, code);
         Double userMovieRating = movieRatingQueryService.getUserMovieRating(code, userId);
