@@ -11,14 +11,14 @@ public class UpdateReviewRes {
     private String nickname;
     private Long reviewId;
     private String content;
-    private LocalDateTime modifiedAt;
+    private LocalDateTime createdAt;
 
     @Builder
-    public UpdateReviewRes(String nickname, Long reviewId, String content, LocalDateTime modifiedAt) {
+    public UpdateReviewRes(String nickname, Long reviewId, String content, LocalDateTime createdAt) {
         this.nickname = nickname;
         this.reviewId = reviewId;
         this.content = content;
-        this.modifiedAt = modifiedAt;
+        this.createdAt = createdAt;
     }
 
     public static UpdateReviewRes from(MovieReview movieReview) {
@@ -26,7 +26,7 @@ public class UpdateReviewRes {
                 .nickname(movieReview.getNickname())
                 .reviewId(movieReview.getId())
                 .content(movieReview.getContent())
-                .modifiedAt(movieReview.getModifiedAt())
+                .createdAt(movieReview.getCreatedAt())
                 .build();
     }
 }
