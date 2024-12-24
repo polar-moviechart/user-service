@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: user-service
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 5"]
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://host.docker.internal:3306/polardb_user
+            - name: SPRING_RABBITMQ_HOST
+              value: host.docker.internal
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: SPRING_RABBITMQ_USERNAME
+              value: admin
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: password
+          volumeMounts:
+            - name: user-config-volume
+              mountPath: /workspace/config
+      volumes:
+        - name: user-config-volume
+          configMap:
+            name: user-config
